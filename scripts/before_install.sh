@@ -9,4 +9,5 @@
 
 # install pm2 to restart node app
 #npm i -g pm2
+cd /home/ec2-user/igp-scorecard-api
 sudo npm i -g puppeteer --unsafe-perm=true
