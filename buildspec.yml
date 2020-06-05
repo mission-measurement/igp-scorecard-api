@@ -1,0 +1,24 @@
+version: 0.2
+env:
+  variables:
+  BEARER_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRheGFwaXVzZXIiLCJpYXQiOjE1NjY5NjM0NTF9.OJX6dg8dt3guiJ4XSRhfPqSbg-MoU-mTPbEyjVIFB_A'
+  HOST: 'localhost:3000'
+phases:
+  install:
+    commands:
+  pre_build:
+    commands:
+      - npm i --unsafe-perm
+
+  build:
+    commands:
+      # Building the react app
+      - npm run build
+  # post_build:
+  #     commands:
+  #         – sls deploy –v
+artifacts:
+  files:
+    - 'build/**/*'
+    - appspec.yml
+    - scripts/*
