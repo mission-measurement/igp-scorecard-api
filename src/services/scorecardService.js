@@ -41,7 +41,10 @@ const parseToHTML = (data) => {
  */
 const parseToPDF = async (parsedHTML) => {
   const filename = Math.random().toString(36).substring(7);
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+  });
   const page = await browser.newPage();
   await page.setContent(parsedHTML, { waitUntil: 'networkidle0' });
   await page.emulateMedia('screen');

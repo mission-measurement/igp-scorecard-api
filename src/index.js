@@ -13,7 +13,7 @@ app.use(cors());
 app.use(logger('dev'));
 
 // public assets (html, css, img)
-app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use('/scorecard/public', express.static(path.join(__dirname, '../public')));
 // scorecards
 app.use('/', router);
 
