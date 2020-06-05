@@ -13,7 +13,7 @@ phases:
   build:
     commands:
       # Building the react app
-      - npm run build
+      - npm run start
   # post_build:
   #     commands:
   #         – sls deploy –v
