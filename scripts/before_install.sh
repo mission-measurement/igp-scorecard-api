@@ -9,4 +9,4 @@
 
 # install pm2 to restart node app
 #npm i -g pm2
-sudo npm install -g puppeteer --unsafe-perm=true
+npm i -g puppeteer --unsafe-perm=true
