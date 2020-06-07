@@ -53,6 +53,8 @@ const parseToPDF = async (parsedHTML) => {
     printBackground: true,
     preferCSSPageSize: false,
   });
+  await page.close();
+  await browser.close();
 
   return filename;
 };
