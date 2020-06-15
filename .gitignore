@@ -4,4 +4,4 @@ node_modules
 # ignore .env file - need HOST and BEARER_TOKEN set!
 .env
 
-public/tmp
+public/tmp/

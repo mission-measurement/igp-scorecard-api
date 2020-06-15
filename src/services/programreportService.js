@@ -1,5 +1,6 @@
 const db = require('../database/databases');
 const SQL = require('sql-template-strings');
+const { getMonthYear } = require('../helpers/parseHelpers');
 const { program } = require('./programService');
 const { organization } = require('./organizationService');
 const { programreportdata } = require('./programreportdataService');
@@ -91,7 +92,6 @@ const getAllData = async (programreportuuid) => {
     return region.d3id;
   });
 
-  console.log(d3ids);
   return {
     ...a,
     ...b,
@@ -106,6 +106,7 @@ const getAllData = async (programreportuuid) => {
       })
       .map((outcome) => outcome.name)
       .join(', '),
+    submitteddate: getMonthYear(r.submitteddate),
     genes: genes,
     postals: postals,
     regions: regions,
