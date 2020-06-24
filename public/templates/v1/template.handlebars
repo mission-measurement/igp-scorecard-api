@@ -316,12 +316,12 @@
                       </div>
                     </div>-->
                                     {{#if score}}
-                                    <div class="row mt-1 my-auto">
+                                    <div class="row">
                                         <div class="col-12 small">
                                             <span style="font-style:italic;">Mission Measurement
                                                 Assessment:</span><br />
                                         </div>
-                                        <div class="col-6 pr-0 my-auto">
+                                        <div class="col-6 pr-0 pt-1">
                                             <div style="padding-right: 10px">
                                                 <table style="font-size: 12px;">
                                                     <tr {{#ifBetween 14 score 15}} style="border: 2px solid black"
@@ -344,7 +344,7 @@
                                                         <td style="background-color: beige; width: 20px; height: 25px;">
                                                         </td>
                                                     </tr>
-                                                    <tr {{#ifBetween 3 score 7}} style="border: 2px solid black"
+                                                    <tr {{#ifBetween 3 score 6}} style="border: 2px solid black"
                                                          {{/ifBetween}}>
                                                         <td style="width: 100px; font-size: 12px;">Limited</td>
                                                         <td
@@ -352,8 +352,8 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <span style="font-size: 50%;">Quality of evidence based on rigor,
-                                                    relevance, and fit of evidence provided</span>
+                                                <span style="font-size: 50%;">Overall assessment, based on rigor,
+                                                    relevance, and validity of evidence provided</span>
                                             </div>
                                         </div>
                                         <div class="col-6 px-0">
@@ -365,8 +365,10 @@
                                                     style="background-color: #EEF2F9; height: 20px; width: 100px; margin-left: -5px;  padding-bottom: 2.5px; border: 1px solid black; z-index: -1;">
                                                     Rigor</div>
                                             </div>
-                                            <div style="text-align: center; font-size: 50%;">Quality of data collection
-                                                methodology</div>
+                                            <div
+                                                style="text-align: left; margin-top: -5px; margin-left: 31px; font-size: 50%;">
+                                                Quality of data collection
+                                                method</div>
                                             <div class="d-flex flex-row align-items-center">
                                                 <div class="d-flex align-items-center justify-content-center"
                                                     style="border-radius: 50%; height: 30px; width: 30px; background-color: #EEF2F9;  padding-bottom: 2.5px; border: 1px solid black; align-items:center;">
@@ -375,8 +377,10 @@
                                                     style="background-color: #EEF2F9; height: 20px; width: 100px; margin-left: -5px; padding-bottom: 2.5px; border: 1px solid black; z-index: -1;">
                                                     Relevance</div>
                                             </div>
-                                            <div style="text-align: center; font-size: 50%;">Fit of measure reported to
-                                                the outcome</div>
+                                            <div
+                                                style="text-align: left; margin-top: -5px; margin-left: 31px; font-size: 50%;">
+                                                Fit of measure(s) to the
+                                                outcome</div>
                                             <div class="d-flex flex-row align-items-center">
                                                 <div class="d-flex align-items-center justify-content-center"
                                                     style="border-radius: 50%; height: 30px; width: 30px; background-color: #EEF2F9;  padding-bottom: 2.5px; border: 1px solid black; align-items:center;">
@@ -385,7 +389,9 @@
                                                     style="background-color: #EEF2F9; height: 20px; width: 100px; margin-left: -5px;  padding-bottom: 2.5px; border: 1px solid black; z-index: -1;">
                                                     Validity</div>
                                             </div>
-                                            <div style="text-align: center; font-size: 50%;">Quality of instruments used
+                                            <div
+                                                style="text-align: left; margin-top: -5px; margin-left: 31px; font-size: 50%;">
+                                                Quality of instruments used
                                             </div>
                                         </div>
                                     </div>
@@ -403,7 +409,7 @@
                                     </div>
                                     {{/if}}
                                 </div>
-                                <div class="col-sm-6 small pt-1">
+                                <div class="col-sm-6 small">
                                     <span style="font-style:italic;">Nonprofit's description of their
                                         evidence:</span><br />
                                     {{describeoutcomecalculation}}
