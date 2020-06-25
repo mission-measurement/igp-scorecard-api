@@ -17,6 +17,10 @@ Handlebars.registerHelper('ifBetween', function (arg1, value, arg2, options) {
     return options.inverse(this);
   }
 });
+
+Handlebars.registerHelper('decimal', function (number) {
+  return parseInt(number).toLocaleString('en-US');
+});
 // ...
 
 // load the current template
