@@ -16,6 +16,8 @@ const {
   programreportdataversions,
 } = require('./programreportdataversionService');
 
+const { getLocation } = require('./programlocationService');
+
 const calculateScore = async (typeofdata, outcomefit, validity) => {
   if (!typeofdata || !outcomefit || !validity) {
     return null;
@@ -84,7 +86,12 @@ const getAllData = async (programreportuuid) => {
     s.validityweight
   );
 
-  console.log(regions);
+  const location = await getLocation(
+    r.programid,
+    r.programreportid,
+    c.programreportdataversionid
+  );
+
   d3ids = regions.filter((region) => {
     return region.countryid == 1;
   });
@@ -107,6 +114,7 @@ const getAllData = async (programreportuuid) => {
       .map((outcome) => outcome.name)
       .join(', '),
     submitteddate: getMonthYear(r.submitteddate),
+    location: location,
     genes: genes,
     postals: postals,
     regions: regions,

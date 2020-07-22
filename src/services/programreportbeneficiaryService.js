@@ -12,14 +12,20 @@ const programreportbeneficiaries = async (
 
   const q0 = SQL`SELECT prb.inputvalue AS value, si.labeltext AS beneficiarychar, CASE WHEN si.questionid = 42 THEN ${gender} WHEN si.questionid = 43 THEN ${age} WHEN si.questionid = 44 THEN ${ethnicity} WHEN si.questionid = 45 THEN ${add_char} END AS category FROM programreportbeneficiaries AS prb LEFT JOIN survey_db.inputvalues AS si ON prb.inputdataid = si.inputvalueid WHERE si.questionid IN (42, 43, 44, 45) AND prb.programreportid = ${programreportid} AND prb.programreportdataversionid = ${programreportdataversionid} ORDER BY \`order\``;
   const r = await db.query(q0);
-  // TODO!
   let chars = [];
   for (i = 0; i < r.length; i++) {
     let char = {};
     char.beneficiarychar = r[i].beneficiarychar;
     char.value = r[i].value;
     char.category = r[i].category;
-    chars.push(char);
+
+    if (
+      parseInt(char.value) >= 10 ||
+      char.beneficiarychar == gender ||
+      char.beneficiarychar == ethnicity
+    ) {
+      chars.push(char);
+    }
   }
 
   const genders = chars.filter((char) => {
