@@ -13,6 +13,7 @@ const getLocation = async (
   for (let i = 0; i < r.length; i++) {
     country = {};
     country.name = r[i].name;
+    country.code = r[i].code;
     country.countryid = r[i].countryid;
     country.regions = await getRegions(
       programreportid,
@@ -23,8 +24,35 @@ const getLocation = async (
   }
 
   if (countries.length > 5) {
+    countries = countries
+      .map((country) => {
+        if (country.regions.length) {
+          return (
+            country.code +
+            ' (' +
+            country.regions.map((region) => region.code).join(', ') +
+            ')'
+          );
+        } else {
+          return country.code;
+        }
+      })
+      .join(', ');
   } else {
-    countries = countries.map((country) => country.name).join(', ');
+    countries = countries
+      .map((country) => {
+        if (country.regions.length) {
+          return (
+            country.name +
+            ' (' +
+            country.regions.map((region) => region.name).join(', ') +
+            ')'
+          );
+        } else {
+          return country.name;
+        }
+      })
+      .join(', ');
   }
   return countries;
 };
