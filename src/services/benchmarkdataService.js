@@ -6,12 +6,12 @@ const getBenchmarkData = async (outcomeid) => {
   });
   if (r.messge) {
     return {
-      minCPO: 'N/A',
-      maxCPO: 'N/A',
-      avgCPO: 'N/A',
-      minER: 'N/A',
-      maxER: 'N/A',
-      avgER: 'N/A',
+      minCPO: undefined,
+      maxCPO: undefined,
+      avgCPO: undefined,
+      minER: undefined,
+      maxER: undefined,
+      avgER: undefined,
     };
   } else {
     return {

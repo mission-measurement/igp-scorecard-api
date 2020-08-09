@@ -530,12 +530,10 @@
                                         Impact Genome Benchmark<sup>*</sup> for this Outcome
                                     </div>
                                     <div class="col-sm-3 my-auto text-center">
-                                        {{#if minER}}{{minER}}%{{/if}} -
-                                        {{#if maxER}}{{maxER}}%{{/if}}
+                                        {{#if minER}}{{minER}}% - {{maxER}}%{{else}}N/A{{/if}}
                                     </div>
                                     <div class="col-sm-4 my-auto text-center">
-                                        {{#if minCPO}}${{decimal minCPO}}{{/if}} -
-                                        {{#if maxCPO}}${{decimal maxCPO}}{{/if}}
+                                        {{#if minCPO}}${{decimal minCPO}} - ${{decimal maxCPO}}{{else}}N/A{{/if}}
                                     </div>
                                 </div>
                             </div>
