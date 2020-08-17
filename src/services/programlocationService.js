@@ -6,7 +6,7 @@ const getLocation = async (
   programreportid,
   programreportdataversionid
 ) => {
-  let q = SQL`SELECT * FROM programlocations LEFT JOIN countries USING(countryid) WHERE programid = ${programid}`;
+  let q = SQL`SELECT * FROM programlocations LEFT JOIN countries USING(countryid) WHERE programid = ${programid} GROUP BY countryid`;
   let r = await db.query(q);
 
   let countries = [];
