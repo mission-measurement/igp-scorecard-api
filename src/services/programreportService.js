@@ -121,7 +121,7 @@ const getAllData = async (programreportuuid) => {
     d3ids: d3ids,
     beneficiarycharacateristics: beneficiaries,
     cpo: parseInt(s.totalbudget / t.primaryoutcome.acheived),
-    efficacy: parseInt(
+    efficacy: Math.round(
       100 * (t.primaryoutcome.acheived / t.primaryoutcome.measured)
     ),
   };
