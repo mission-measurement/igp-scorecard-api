@@ -62,7 +62,7 @@ const getRegions = async (
   programreportdataversionid,
   countryid
 ) => {
-  let q = SQL`SELECT * FROM programreportregions LEFT JOIN regions USING(regionid) WHERE countryid = ${countryid} AND programreportid = ${programreportid} AND programreportdataversionid = ${programreportdataversionid}`;
+  let q = SQL`SELECT * FROM programreportregions LEFT JOIN regions USING(regionid) WHERE countryid = ${countryid} AND programreportid = ${programreportid} AND programreportdataversionid = ${programreportdataversionid} GROUP BY regionid`;
 
   let r = await db.query(q);
   return r;
