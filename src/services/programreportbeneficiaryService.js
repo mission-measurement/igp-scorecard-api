@@ -9,8 +9,9 @@ const programreportbeneficiaries = async (
   const age = 'Age';
   const ethnicity = 'Ethnicity';
   const add_char = 'Additional Characteristics';
-
-  const q0 = SQL`SELECT prb.inputvalue AS value, si.labeltext AS beneficiarychar, CASE WHEN si.questionid = 42 THEN ${gender} WHEN si.questionid = 43 THEN ${age} WHEN si.questionid = 44 THEN ${ethnicity} WHEN si.questionid = 45 THEN ${add_char} END AS category FROM programreportbeneficiaries AS prb LEFT JOIN survey_db.inputvalues AS si ON prb.inputdataid = si.inputvalueid WHERE si.questionid IN (42, 43, 44, 45) AND prb.programreportid = ${programreportid} AND prb.programreportdataversionid = ${programreportdataversionid} ORDER BY \`order\``;
+  // probably want to add the AND clause:  AND prb.programreportdataversionid = ${programreportdataversionid}
+  // back sometime later
+  const q0 = SQL`SELECT prb.inputvalue AS value, si.labeltext AS beneficiarychar, CASE WHEN si.questionid = 42 THEN ${gender} WHEN si.questionid = 43 THEN ${age} WHEN si.questionid = 44 THEN ${ethnicity} WHEN si.questionid = 45 THEN ${add_char} END AS category FROM programreportbeneficiaries AS prb INNER JOIN (SELECT * FROM survey_db.inputvalues WHERE questionid IN (42, 43, 44, 45)) AS si ON prb.inputdataid = si.inputvalueid AND prb.programreportid = ${programreportid} ORDER BY \`order\``;
   const r = await db.query(q0);
   let chars = [];
   for (i = 0; i < r.length; i++) {
