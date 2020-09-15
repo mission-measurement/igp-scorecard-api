@@ -28,10 +28,11 @@ const main = async () => {
       console.log(error);
     }
   }
+  return;
 };
 
 const insertNewScorecard = async (programreportid, url) => {
-  let q = `INSERT INTO igp_apps_db.scorecards (programreportid, programid, url, type, creationdate, final) SELECT ${programreportid}, programid, ${url}, NULL, NOW(), 1 FROM igp_apps_db.programreports WHERE programreportid = ${programreportid}`;
+  let q = SQL`INSERT INTO igp_apps_db.scorecards (programreportid, programid, url, type, creationdate, final) SELECT ${programreportid}, programid, ${url}, NULL, NOW(), 1 FROM igp_apps_db.programreports WHERE programreportid = ${programreportid}`;
   await hubDB.query(q);
 };
 
