@@ -22,7 +22,8 @@ const main = async () => {
         programreportid,
         filename
       );
-      await insertNewScorecard(programreportid, url);
+      await insertNewScorecard(programreportid, location);
+      console.log(uuid);
     } catch (error) {
       console.log(error);
     }
