@@ -43,7 +43,13 @@ const sendHTML = async (req, res) => {
   }
 };
 
+const generateScorecard = async (programreportuuid) => {
+  const filename = await scorecardService.getPDF(programreportuuid);
+  return path.join(__dirname + '../../../public/tmp/' + filename + '.pdf');
+};
+
 module.exports = {
   sendPDF: sendPDF,
   sendHTML: sendHTML,
+  generateScorecard: generateScorecard,
 };
