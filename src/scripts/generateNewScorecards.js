@@ -30,7 +30,7 @@ const main = async () => {
       console.log(error);
     }
   }
-  return;
+  process.exit();
 };
 
 const insertNewScorecard = async (programreportid, url) => {
