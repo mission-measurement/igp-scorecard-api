@@ -10,7 +10,7 @@ const hubDB = require('../database/databases');
 const scorecardController = require('../controllers/scorecardController');
 
 const main = async () => {
-  let q = SQL`SELECT * FROM programreports WHERE programreports.ispublished AND programreports.programreportid NOT IN (SELECT programreportid FROM scorecards)`;
+  let q = SQL`SELECT * FROM programreports WHERE programreports.impactverified = 1 AND programreports.programreportid NOT IN (SELECT programreportid FROM scorecards)`;
   let result = await hubDB.query(q);
 
   for (i = 0; i < result.length; i++) {
