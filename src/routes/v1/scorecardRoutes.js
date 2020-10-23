@@ -6,4 +6,9 @@ scorecardRoutes.get('/', (req, res, next) => {
   scorecardController.sendPDF(req, res);
 });
 
+scorecardRoutes.get('/portfolio', (req, res, next) => {
+  scorecardController.sendPDFBatch(req, res);
+});
+
+
 module.exports = scorecardRoutes;
