@@ -117,7 +117,9 @@ const getPortfolioScorecards = async (portfolioid) => {
       let programreportuuid = r[i].programreportuuid
       console.log(programreportuuid)
       let filename = await getScorecardPDF(programreportuuid)
-      if (filename) {
+      if (!filename) {
+        filename = await getPDF(programreportuuid, false)
+      } else {
         filenames.push(filename)
       }
     }
