@@ -59,7 +59,8 @@ const sendPDFBatch = async (req, res) => {
 
     stream.on('end', () => {
       fs.unlinkSync(path.join(__dirname + '../../../public/tmp/' + foldername + '.zip'))
-      fs.rmdirSync(path.join(__dirname + '../../../public/tmp/' + foldername), { recursive: true })
+      //fs.rmdirSync(path.join(__dirname + '../../../public/tmp/' + foldername), { recursive: true })
+      child_process.execSync(`rm -r ${exec_path}`)
     })
 
   } else {
