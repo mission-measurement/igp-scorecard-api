@@ -23,7 +23,6 @@ const main = async () => {
         filename
       );
       fs.unlinkSync(filename);
-      await insertNewScorecard(programreportid, location);
       console.log('Added scorecard for:');
       console.log(uuid);
     } catch (error) {
