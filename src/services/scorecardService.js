@@ -9,6 +9,8 @@ const axios = require('axios');
 const { writer } = require('repl');
 const { program } = require('./programService');
 
+let browser; // use a singleton instance of puppeteer
+
 // register custom helper functions to Handlebars here:
 Handlebars.registerHelper('addOne', function (value) {
   return value + 1;
@@ -49,7 +51,6 @@ const parseToHTML = (data) => {
  */
 const parseToPDF = async (parsedHTML, usesingleton = false) => {
   const filename = Math.random().toString(36).substring(7);
-  let browser;
   if (usesingleton) {
     if (!browser) {
       browser = await puppeteer.launch({
