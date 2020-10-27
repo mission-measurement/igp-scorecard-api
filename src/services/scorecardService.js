@@ -25,7 +25,11 @@ Handlebars.registerHelper('ifBetween', function (arg1, value, arg2, options) {
 });
 
 Handlebars.registerHelper('decimal', function (number) {
-  return parseInt(number).toLocaleString('en-US');
+  if (number < 1) {
+    return parseFloat(number).toFixed(2)
+  } else {
+    return parseInt(number).toLocaleString('en-US');
+  }
 });
 // ...
 
