@@ -20,14 +20,14 @@ const reuploadScorecard = async (programreportid) => {
     } else {
         let programreportuuid = r[0].programreportuuid
         let filename = await generateNewScorecard(programreportuuid);
-        await uploadScorecard(
+        let { location } = await uploadScorecard(
             programreportid,
             filename
         );
-        fs.unlinkSync(filename);
-    }
 
-    return true;
+        fs.unlinkSync(filename);
+        return location
+    }
 }
 
 

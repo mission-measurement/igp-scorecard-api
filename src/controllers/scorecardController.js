@@ -93,7 +93,7 @@ const reuploadScorecard = async (req, res) => {
 
   if (query.programreportid) {
     let programreportid = query.programreportid
-    let { location } = await reuploadScorecardService.reuploadScorecard(programreportid)
+    let location = await reuploadScorecardService.reuploadScorecard(programreportid)
     res.send({ url: location })
   } else {
     res.status(400).send('Missing programreportid')
