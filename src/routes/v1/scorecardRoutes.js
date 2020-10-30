@@ -11,4 +11,8 @@ scorecardRoutes.get('/portfolio', (req, res, next) => {
 });
 
 
+scorecardRoutes.post('/reupload', (req, res, next) => {
+  scorecardController.reuploadScorecard(req, res)
+})
+
 module.exports = scorecardRoutes;

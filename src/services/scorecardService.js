@@ -154,6 +154,13 @@ const getPDF = async (reportuuid, usesingleton = false) => {
   }
 };
 
+const getNewPDF = async (reportuuid, usesingleton = false) => {
+  const r = await getAllData(reportuuid);
+  const s = parseToHTML({ ...r, host: process.env.HOST || 'https://api.impactgenome.com' });
+  const t = await parseToPDF(s, usesingleton);
+  return t;
+}
+
 /**
  * Generates just the HTML for a given reportuuid
  * @param {*} reportuuid
@@ -168,5 +175,6 @@ const getHTML = async (reportuuid) => {
 module.exports = {
   getPDF: getPDF,
   getHTML: getHTML,
+  getNewPDF: getNewPDF,
   getPortfolioScorecards: getPortfolioScorecards
 };

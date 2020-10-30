@@ -8,6 +8,7 @@ const SQL = require('sql-template-strings');
 
 const hubDB = require('../database/databases');
 const scorecardController = require('../controllers/scorecardController');
+const { uploadScorecard } = require('../helpers/uploadScorecard')
 
 const main = async () => {
   let q = SQL`SELECT * FROM programreports WHERE programreports.impactverified = 1 AND programreports.programreportid NOT IN (SELECT DISTINCT(programreportid) FROM scorecards)`;
@@ -35,22 +36,6 @@ const main = async () => {
 const insertNewScorecard = async (programreportid, url) => {
   let q = SQL`INSERT INTO igp_apps_db.scorecards (programreportid, programid, url, type, creationdate, final) SELECT ${programreportid}, programid, ${url}, NULL, NOW(), 1 FROM igp_apps_db.programreports WHERE programreportid = ${programreportid}`;
   await hubDB.query(q);
-};
-
-const uploadScorecard = async (programreportid, filename) => {
-  let data = new FormData();
-  data.append('scorecard', fs.createReadStream(filename));
-  let config = {
-    method: 'post',
-    url: `${process.env.API_HOST}/aws/programreports/scorecard?programreportid=${programreportid}`,
-    headers: {
-      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-      ...data.getHeaders(),
-    },
-    data: data,
-  };
-  let r = await axios(config);
-  return r.data;
 };
 
 main();

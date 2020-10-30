@@ -1,7 +1,9 @@
-const scorecardService = require('../services/scorecardService');
 const fs = require('fs');
 const path = require('path');
-const child_process = require('child_process')
+const child_process = require('child_process');
+
+const reuploadScorecardService = require('../services/reuploadScorecardService');
+const scorecardService = require('../services/scorecardService');
 
 const sendPDF = async (req, res) => {
   const query = req.query;
@@ -60,7 +62,7 @@ const sendPDFBatch = async (req, res) => {
     stream.on('end', () => {
       fs.unlinkSync(path.join(__dirname + '../../../public/tmp/' + foldername + '.zip'))
       //fs.rmdirSync(path.join(__dirname + '../../../public/tmp/' + foldername), { recursive: true })
-      child_process.execSync(`rm -r ${exec_path}`)
+      //child_process.execSync(`rm -r ${exec_path}`)
     })
 
   } else {
@@ -86,9 +88,23 @@ const generateScorecard = async (programreportuuid) => {
   return path.join(__dirname + '../../../public/tmp/' + filename + '.pdf');
 };
 
+const reuploadScorecard = async (req, res) => {
+  const query = req.query;
+
+  if (query.programreportid) {
+    let programreportid = query.programreportid
+    let { location } = await reuploadScorecardService.reuploadScorecard(programreportid)
+    res.send({ url: location })
+  } else {
+    res.status(400).send('Missing programreportid')
+  }
+
+}
+
 module.exports = {
   sendPDF: sendPDF,
   sendHTML: sendHTML,
   sendPDFBatch: sendPDFBatch,
   generateScorecard: generateScorecard,
+  reuploadScorecard: reuploadScorecard
 };
