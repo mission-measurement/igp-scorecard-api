@@ -27,12 +27,21 @@ const getLocation = async (
     countries = countries
       .map((country) => {
         if (country.regions.length) {
-          return (
-            country.code +
-            ' (' +
-            country.regions.map((region) => region.code).join(', ') +
-            ')'
-          );
+          if (country.regions.length <= 5) {
+            return (
+              country.code +
+              ' (' +
+              country.regions.map((region) => region.name).join(', ') +
+              ')'
+            );
+          } else {
+            return (
+              country.code +
+              ' (' +
+              country.regions.map((region) => region.code).join(', ') +
+              ')'
+            );
+          }
         } else {
           return country.code;
         }
@@ -42,12 +51,21 @@ const getLocation = async (
     countries = countries
       .map((country) => {
         if (country.regions.length) {
-          return (
-            country.name +
-            ' (' +
-            country.regions.map((region) => region.name).join(', ') +
-            ')'
-          );
+          if (country.regions.length <= 5) {
+            return (
+              country.name +
+              ' (' +
+              country.regions.map((region) => region.name).join(', ') +
+              ')'
+            );
+          } else {
+            return (
+              country.name +
+              ' (' +
+              country.regions.map((region) => region.code).join(', ') +
+              ')'
+            );
+          }
         } else {
           return country.name;
         }
