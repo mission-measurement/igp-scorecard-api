@@ -3,6 +3,7 @@ const api = require('../helpers/apiHelpers');
 const getBenchmarkData = async (outcomeid) => {
   const r = await api.get('taxonomy', 'benchmarkdata', {
     outcomeid: outcomeid,
+    public: 1
   });
   if (r.messge) {
     return {
