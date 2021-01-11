@@ -8,8 +8,8 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME || 'igp_apps_db',
   port: process.env.DBPORT || 3306,
   host:
-    process.env.DB_HOST ||
-    'igp-db-dev-01.c4u2uv45eucg.us-east-1.rds.amazonaws.com',
+    process.env.DB_SERVER ||
+    'igp-db-prod-aws.c4u2uv45eucg.us-east-1.rds.amazonaws.com',
 });
 
 pool.getConnection((err, connection) => {

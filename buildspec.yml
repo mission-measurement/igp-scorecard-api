@@ -1,24 +1,43 @@
 version: 0.2
+
 env:
-  variables:
-  BEARER_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRheGFwaXVzZXIiLCJpYXQiOjE1NjY5NjM0NTF9.OJX6dg8dt3guiJ4XSRhfPqSbg-MoU-mTPbEyjVIFB_A'
-  HOST: 'localhost:3000'
+  parameter-store:
+    DB_SERVER_PARAM: '/api/$NODE_ENV/db-url'
+    DB_USER_PARAM: '/api/$NODE_ENV/db-username'
+    DB_PASSWORD_PARAM: '/api/$NODE_ENV/db-password'
+    API_SECRET_PARAM: '/api/$NODE_ENV/jwt-secret'
+
 phases:
   install:
-    commands:
+    runtime-versions:
+      docker: 19
   pre_build:
     commands:
-      - npm i --unsafe-perm
-
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - REPOSITORY_URI=527574042611.dkr.ecr.ca-central-1.amazonaws.com/api-scorecard
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      # Building the react app
-      - npm run build
-  # post_build:
-  #     commands:
-  #         – sls deploy –v
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - echo $REPOSITORY_URI
+      - ENV_TAG=$NODE_ENV
+
+      #- docker build -t $REPOSITORY_URI:latest .
+      - docker build -t $REPOSITORY_URI:latest . --build-arg NODE_ENV=${NODE_ENV} --build-arg API_SECRET=${API_SECRET_PARAM} --build-arg DB_SERVER=${DB_SERVER_PARAM} --build-arg DB_USER=${DB_USER_PARAM} --build-arg DB_PASSWORD=${DB_PASSWORD_PARAM}
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$ENV_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$ENV_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"api-taxonomy","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
-  files:
-    - 'build/**/*'
-    - appspec.yml
-    - scripts/*
+  files: imagedefinitions.json
