@@ -29,7 +29,21 @@ const programreportoutcomes = async (
   let outcomes = [];
   let primaryoutcome = {};
   for (i = 0; i < result.length; i++) {
-    if (outcome.isprimary) {
+    if (result[i].isprimary) {
+      let outcome = {};
+      outcome.id = result[i].outcomeid;
+      outcome.name = result[i].outcomename;
+      outcome.genome = result[i].genomename;
+      outcome.impactarea = result[i].impactareaname;
+      outcome.beneficiary = result[i].beneficiaryname;
+      outcome.description = result[i].description;
+      outcome.definition = result[i].definition;
+      outcome.qualifier = result[i].qualifier;
+      outcome.criterias = await outcomecriterias(outcome.id);
+      outcome.outcomerank = result[i].outcomerank;
+      outcome.isprimary = result[i].isprimary;
+      outcome.measured = result[i].measured;
+      outcome.acheived = result[i].acheived;
       primaryoutcome = outcome;
       continue;
     } else {
@@ -50,7 +64,7 @@ const programreportoutcomes = async (
         outcome.acheived = result[i].acheived;
         outcomes.push(outcome);
       } else {
-        break;
+        continue;
       }
     }
   }
