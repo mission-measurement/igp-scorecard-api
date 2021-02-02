@@ -252,3 +252,8 @@ self-reported {
 .no-padding-right {
   padding-right: 0px;
 }
+
+span.outcomecriteria  {
+  margin-left: 5px;
+  font-size: smaller;
+}
