@@ -26,7 +26,7 @@ Handlebars.registerHelper('ifBetween', function (arg1, value, arg2, options) {
 
 Handlebars.registerHelper('decimal', function (number) {
   if (number < 1) {
-    return parseFloat(number).toFixed(2)
+    return parseFloat(number).toFixed(2);
   } else {
     return parseInt(number).toLocaleString('en-US');
   }
@@ -86,56 +86,58 @@ const parseToPDF = async (parsedHTML, usesingleton = false) => {
 };
 
 const getScorecardPDF = async (reportuuid) => {
-  const q = SQL`SELECT * FROM scorecards INNER JOIN programreports USING(programreportid) WHERE programreportuuid = ${reportuuid} ORDER BY scorecardid DESC LIMIT 1`
-  const r = await db.query(q)
+  const q = SQL`SELECT * FROM scorecards INNER JOIN programreports USING(programreportid) WHERE programreportuuid = ${reportuuid} ORDER BY scorecardid DESC LIMIT 1`;
+  const r = await db.query(q);
 
   if (r.length) {
-    console.log("Fetched from S3!")
+    console.log('Fetched from S3!');
     const filename = Math.random().toString(36).substring(7);
-    const location = path.join(__dirname + '/../../public/tmp/' + filename + '.pdf')
-    const url = r[0].url
+    const location = path.join(
+      __dirname + '/../../public/tmp/' + filename + '.pdf'
+    );
+    const url = r[0].url;
     const response = await axios({
       method: 'get',
       url: url,
-      responseType: 'stream'
-    })
+      responseType: 'stream',
+    });
 
-    let writer = fs.createWriteStream(location)
-    response.data.pipe(writer)
+    let writer = fs.createWriteStream(location);
+    response.data.pipe(writer);
     return new Promise((resolve, reject) => {
       writer.on('finish', () => {
-        resolve(filename)
-      })
-    })
+        resolve(filename);
+      });
+    });
   } else {
-    return undefined
+    return undefined;
   }
-}
+};
 
 const getPortfolioScorecards = async (portfolioid) => {
-  const q = SQL`SELECT programreportuuid FROM programreports INNER JOIN portfolioprograms USING(programreportid) WHERE portfolioid = ${portfolioid}`
-  const r = await db.query(q)
+  const q = SQL`SELECT programreportuuid FROM programreports INNER JOIN portfolioprograms USING(programreportid) WHERE portfolioid = ${portfolioid}`;
+  const r = await db.query(q);
 
-  let filenames = []
+  let filenames = [];
   if (r.length) {
     for (let i = 0; i < r.length; i++) {
-      let programreportuuid = r[i].programreportuuid
-      console.log(programreportuuid)
-      let filename = await getScorecardPDF(programreportuuid)
+      let programreportuuid = r[i].programreportuuid;
+      console.log(programreportuuid);
+      let filename = await getScorecardPDF(programreportuuid);
       if (!filename) {
-        filename = await getPDF(programreportuuid, false)
+        filename = await getPDF(programreportuuid, false);
         if (filename) {
-          filenames.push(filename)
+          filenames.push(filename);
         }
       } else {
-        filenames.push(filename)
+        filenames.push(filename);
       }
     }
-    return filenames
+    return filenames;
   } else {
-    return []
+    return [];
   }
-}
+};
 
 /**
  * Generates the PDF for a given reportuuid
@@ -143,12 +145,15 @@ const getPortfolioScorecards = async (portfolioid) => {
  */
 const getPDF = async (reportuuid, usesingleton = false) => {
   // Get all necessary data
-  const filename = await getScorecardPDF(reportuuid)
+  const filename = await getScorecardPDF(reportuuid);
   if (filename) {
-    return filename
+    return filename;
   } else {
     const r = await getAllData(reportuuid);
-    const s = parseToHTML({ ...r, host: process.env.HOST || 'https://api.impactgenome.com' });
+    const s = parseToHTML({
+      ...r,
+      host: process.env.API_HOST || 'https://api.impactgenome.com',
+    });
     const t = await parseToPDF(s, usesingleton);
     return t;
   }
@@ -156,10 +161,13 @@ const getPDF = async (reportuuid, usesingleton = false) => {
 
 const getNewPDF = async (reportuuid, usesingleton = false) => {
   const r = await getAllData(reportuuid);
-  const s = parseToHTML({ ...r, host: process.env.HOST || 'https://api.impactgenome.com' });
+  const s = parseToHTML({
+    ...r,
+    host: process.env.API_HOST || 'https://api.impactgenome.com',
+  });
   const t = await parseToPDF(s, usesingleton);
   return t;
-}
+};
 
 /**
  * Generates just the HTML for a given reportuuid
@@ -168,7 +176,7 @@ const getNewPDF = async (reportuuid, usesingleton = false) => {
 const getHTML = async (reportuuid) => {
   // Get all necessary data
   const r = await getAllData(reportuuid);
-  const s = parseToHTML({ ...r, host: process.env.HOST });
+  const s = parseToHTML({ ...r, host: process.env.API_HOST });
   return s;
 };
 
@@ -176,5 +184,5 @@ module.exports = {
   getPDF: getPDF,
   getHTML: getHTML,
   getNewPDF: getNewPDF,
-  getPortfolioScorecards: getPortfolioScorecards
+  getPortfolioScorecards: getPortfolioScorecards,
 };

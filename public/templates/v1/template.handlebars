@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="{{host}}/scorecard/public/css/v1/style.css" rel="stylesheet" />
+    <link href="{{host}}/scorecard/public/css/v1/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body id='overrides-bootstrap'>
@@ -262,7 +262,7 @@
                                 class="blue">{{primaryoutcome.name}}</span></br>
                             {{primaryoutcome.qualifier}}<br />
                             {{#each primaryoutcome.criterias}}
-                            <span class="outcomecriteria">- {{this}}</span><br />
+                            <div class="smaller-definition">- {{this}}</div>
                             {{/each}}
                             {{#if secondaryoutcomes}}<span class="bold">Secondary Outcome(s):</span> <span
                                 class="blue">{{secondaryoutcomes}}</span>{{/if}}

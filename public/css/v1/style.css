@@ -253,7 +253,7 @@ self-reported {
   padding-right: 0px;
 }
 
-span.outcomecriteria  {
-  margin-left: 5px;
-  font-size: smaller;
+.smaller-definition {
+  padding-left: 10px;
+  font-size: 12px;
 }
