@@ -256,4 +256,6 @@ self-reported {
 .smaller-definition {
   padding-left: 10px;
   font-size: 12px;
+  display: flex;
+  flex-direction: row;
 }
