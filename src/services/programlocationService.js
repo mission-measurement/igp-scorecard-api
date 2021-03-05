@@ -35,7 +35,7 @@ const getLocation = async (
               ')'
             );
           } else if (country.regions.length == 50) {
-            return ' (all of the states)';
+            return country.code + ' (all of the states)';
           } else {
             return (
               country.code +
@@ -61,7 +61,7 @@ const getLocation = async (
               ')'
             );
           } else if (country.regions.length == 50) {
-            return ' (all of the states)';
+            return country.name + ' (all of the states)';
           } else {
             return (
               country.name +
