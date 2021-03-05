@@ -60,6 +60,8 @@ const getLocation = async (
               country.regions.map((region) => region.name).join(', ') +
               ')'
             );
+          } else if (country.regions.length == 50) {
+            return ' (all of the states)';
           } else {
             return (
               country.name +
