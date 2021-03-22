@@ -255,7 +255,11 @@ self-reported {
 
 .smaller-definition {
   padding-left: 10px;
-  font-size: 12px;
+  font-size: 10.5px;
   display: flex;
   flex-direction: row;
+}
+
+.outcome-section {
+  font-size: 11px;
 }

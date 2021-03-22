@@ -260,15 +260,15 @@
                             <div class="border-bottom-solid"></div>
                             <span class="bold">Primary Outcome:</span> <span
                                 class="blue">{{primaryoutcome.name}}</span></br>
-                            {{primaryoutcome.qualifier}}<br />
+                            <span class="outcome-section">{{primaryoutcome.qualifier}}</span><br />
                             {{#each primaryoutcome.criterias}}
                             <div class="smaller-definition">
                                 <div style="margin-right: 5px;">-</div>
                                 <div>{{this}}</div>
                             </div>
                             {{/each}}
-                            {{#if secondaryoutcomes}}<span class="bold">Secondary Outcome(s):</span> <span
-                                class="blue">{{secondaryoutcomes}}</span>{{/if}}
+                            {{#if secondaryoutcomes}}<span class="bold outcome-section">Secondary Outcome(s):</span>
+                            <span class="blue outcome-section">{{secondaryoutcomes}}</span>{{/if}}
                         </div>
                     </div>
                 </div>
