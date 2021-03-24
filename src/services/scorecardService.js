@@ -70,7 +70,8 @@ const parseToPDF = async (parsedHTML, usesingleton = false) => {
   }
   const page = await browser.newPage();
   await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
-  await page.waitFor(2000);
+  await page.waitForFunction("window.status == 'ready'");
+
   await page.emulateMedia('screen');
   await page.pdf({
     path: path.join(__dirname + '../../../public/tmp/' + filename + '.pdf'),
