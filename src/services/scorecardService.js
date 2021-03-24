@@ -68,26 +68,27 @@ const parseToPDF = async (parsedHTML, usesingleton = false) => {
         headless: true,
         args: ['--no-sandbox'],
       });
-    const page = await browser.newPage();
-    await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
-    await page.waitFor(1000);
+      const page = await browser.newPage();
+      await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
+      await page.waitFor(1000);
 
-    await page.emulateMedia('screen');
-    await page.pdf({
-      path: path.join(__dirname + '../../../public/tmp/' + filename + '.pdf'),
-      printBackground: true,
-      preferCSSPageSize: false,
-    });
-    await page.close();
-  
-    if (!usesingleton) {
+      await page.emulateMedia('screen');
+      await page.pdf({
+        path: path.join(__dirname + '../../../public/tmp/' + filename + '.pdf'),
+        printBackground: true,
+        preferCSSPageSize: false,
+      });
+      await page.close();
+
+      if (!usesingleton) {
+        await browser.close();
+      }
+
+      return filename;
+    } catch (error) {
       await browser.close();
     }
-  
-    return filename;
-    } catch (error) {
-      await browser.close()
-    }
+  }
 };
 
 const getScorecardPDF = async (reportuuid) => {
