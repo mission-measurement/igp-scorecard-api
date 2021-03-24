@@ -30,6 +30,4 @@ d3.json('https://d3js.org/us-10m.v1.json', function (error, us) {
     })
     .attr('stroke', 'black')
     .attr('stroke-width', '0.3px');
-}).then(() => {
-  window.status = 'ready';
 });

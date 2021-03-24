@@ -70,7 +70,7 @@ const parseToPDF = async (parsedHTML, usesingleton = false) => {
   }
   const page = await browser.newPage();
   await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
-  await page.waitForFunction("window.status == 'ready'");
+  await page.waitForTimeout(1000);
 
   await page.emulateMedia('screen');
   await page.pdf({
