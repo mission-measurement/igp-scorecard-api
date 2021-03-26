@@ -281,22 +281,24 @@
                                 <div class="col-sm-3 py-auto text-center reported">
                                     {{#if efficacy}}<div class="blue-bold">{{efficacy}}%</div>{{/if}}
                                     <div class="bold">Efficacy Rate</div>
-                                    <div class="small">% of beneficiaries achieving a positive outcome</div>
+                                    <div class="small" style="font-size: 70%;">% of beneficiaries achieving a positive
+                                        outcome</div>
                                 </div>
                                 <div class="col-sm-3 py-auto text-center reported">
                                     <div class="blue-bold">{{decimal primaryoutcome.measured}}</div>
                                     <div class="bold">Program Reach</div>
-                                    <div class="small"># of beneficiaries served</div>
+                                    <div class="small" style="font-size: 70%;"># of beneficiaries served</div>
                                 </div>
                                 <div class="col-sm-3 py-auto text-center reported">
                                     <div class="blue-bold">{{decimal primaryoutcome.acheived}}</div>
                                     <div class="bold">Actual Outcomes</div>
-                                    <div class="small">Total # of beneficiaries achieving a positive outcome</div>
+                                    <div class="small" style="font-size: 70%;">Total # of beneficiaries achieving a
+                                        positive outcome</div>
                                 </div>
                                 <div class="col-sm-3 py-auto text-center">
                                     {{#if cpo}}<div class="blue-bold">${{decimal cpo}}</div>{{/if}}
                                     <div class="bold">Cost per Outcome</div>
-                                    <div class="small">Budget / Actual Outcomes</div>
+                                    <div class="small" style="font-size: 70%;">Budget / Actual Outcomes</div>
                                 </div>
                             </div>
                         </div>
@@ -497,10 +499,10 @@
                         <div class="col-sm-12">
                             <div class="border-bottom">
                                 <div class="row">
-                                    <div class="col-sm-5 bold my-auto">
+                                    <div class="col-sm-6 bold my-auto pr-0">
                                         Program Name
                                     </div>
-                                    <div class="col-sm-3 text-center bold my-auto">
+                                    <div class="col-sm-2 text-center bold my-auto pr-0">
                                         Efficacy Rate
                                     </div>
                                     <div class="col-sm-4 text-center bold my-auto">
@@ -514,10 +516,10 @@
                         <div class="col-sm-12">
                             <div class="border-bottom">
                                 <div class="row">
-                                    <div class="col-sm-5 my-auto">
+                                    <div class="col-sm-6 my-auto pr-0">
                                         {{programname}}
                                     </div>
-                                    <div class="col-sm-3 my-auto text-center">
+                                    <div class="col-sm-2 my-auto text-center pr-0">
                                         {{#if efficacy}}{{efficacy}}%{{/if}}
                                     </div>
                                     <div class="col-sm-4 my-auto text-center">
@@ -531,10 +533,10 @@
                         <div class="col-sm-12">
                             <div class="border-bottom">
                                 <div class="row">
-                                    <div class="col-sm-5 my-auto">
+                                    <div class="col-sm-6 my-auto  pr-0 ">
                                         Impact Genome Benchmark<sup>*</sup> for this Outcome
                                     </div>
-                                    <div class="col-sm-3 my-auto text-center">
+                                    <div class="col-sm-2 my-auto text-center pr-0">
                                         {{#if minER}}{{minER}}% - {{maxER}}%{{else}}N/A{{/if}}
                                     </div>
                                     <div class="col-sm-4 my-auto text-center">
