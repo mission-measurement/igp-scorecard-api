@@ -9,7 +9,7 @@ const pool = mysql.createPool({
   port: process.env.DBPORT || 3306,
   host:
     process.env.DB_HOST ||
-    'igp-db-prod-aws.c4u2uv45eucg.us-east-1.rds.amazonaws.com',
+    'igp-prod-cad-db.cqu7lxotxvmg.ca-central-1.rds.amazonaws.com',
 });
 
 pool.getConnection((err, connection) => {

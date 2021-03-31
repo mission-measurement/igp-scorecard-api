@@ -53,8 +53,8 @@ const parseToHTML = (data) => {
  * Renders the (parsed) HTML in puppeteer and creates a screenshot (a.k.a. PDF)
  * @param {*} parsedHTML
  */
-const parseToPDF = async (parsedHTML, usesingleton = false) => {
-  const filename = Math.random().toString(36).substring(7);
+const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
+  const filename = r.reportigpuid;
   if (usesingleton) {
     if (!browser) {
       browser = await puppeteer.launch({
@@ -97,7 +97,7 @@ const getScorecardPDF = async (reportuuid) => {
 
   if (r.length) {
     console.log('Fetched from S3!');
-    const filename = Math.random().toString(36).substring(7);
+    const filename = r[0].reportigpuid;
     const location = path.join(
       __dirname + '/../../public/tmp/' + filename + '.pdf'
     );
@@ -121,14 +121,13 @@ const getScorecardPDF = async (reportuuid) => {
 };
 
 const getPortfolioScorecards = async (portfolioid) => {
-  const q = SQL`SELECT programreportuuid FROM programreports INNER JOIN portfolioprograms USING(programreportid) WHERE portfolioid = ${portfolioid}`;
+  const q = SQL`SELECT programreportuuid FROM programreports INNER JOIN portfolioprograms USING(programreportid) WHERE portfolioid = ${portfolioid} AND impactverified = 1`;
   const r = await db.query(q);
 
   let filenames = [];
   if (r.length) {
     for (let i = 0; i < r.length; i++) {
       let programreportuuid = r[i].programreportuuid;
-      console.log(programreportuuid);
       let filename = await getScorecardPDF(programreportuuid);
       if (!filename) {
         filename = await getPDF(programreportuuid, false);
@@ -160,7 +159,7 @@ const getPDF = async (reportuuid, usesingleton = false) => {
       ...r,
       host: process.env.API_HOST || 'https://api.impactgenome.com',
     });
-    const t = await parseToPDF(s, usesingleton);
+    const t = await parseToPDF(r, s, usesingleton);
     return t;
   }
 };
@@ -171,7 +170,7 @@ const getNewPDF = async (reportuuid, usesingleton = false) => {
     ...r,
     host: process.env.API_HOST || 'https://api.impactgenome.com',
   });
-  const t = await parseToPDF(s, usesingleton);
+  const t = await parseToPDF(r, s, usesingleton);
   return t;
 };
 

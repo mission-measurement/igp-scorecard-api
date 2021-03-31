@@ -8,7 +8,8 @@ const SQL = require('sql-template-strings');
 
 const hubDB = require('../database/databases');
 const scorecardController = require('../controllers/scorecardController');
-const { uploadScorecard } = require('../helpers/uploadScorecard')
+const { uploadScorecard } = require('../helpers/uploadScorecard');
+const { generateBatchScorecards } = require('../services/batchService');
 
 const main = async () => {
   let q = SQL`SELECT * FROM programreports WHERE programreports.impactverified = 1 AND programreports.programreportid NOT IN (SELECT DISTINCT(programreportid) FROM scorecards)`;
@@ -30,12 +31,10 @@ const main = async () => {
       console.log(error);
     }
   }
-  process.exit();
-};
 
-const insertNewScorecard = async (programreportid, url) => {
-  let q = SQL`INSERT INTO igp_apps_db.scorecards (programreportid, programid, url, type, creationdate, final) SELECT ${programreportid}, programid, ${url}, NULL, NOW(), 1 FROM igp_apps_db.programreports WHERE programreportid = ${programreportid}`;
-  await hubDB.query(q);
+  await generateBatchScorecards();
+
+  process.exit();
 };
 
 main();
