@@ -12,6 +12,8 @@ const uploadScorecard = async (programreportid, filename) => {
       Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
       ...data.getHeaders(),
     },
+    maxContentLength: Infinity,
+    maxBodyLength: Infinity,
     data: data,
   };
   let r = await axios(config);
