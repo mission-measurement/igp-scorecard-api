@@ -55,14 +55,7 @@ const parseToHTML = (data) => {
  */
 const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
   const filename = r.reportigpuid;
-  if (usesingleton) {
-    if (!browser) {
-      browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox'],
-      });
-    }
-  } else {
+  if (!browser) {
     browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox'],
