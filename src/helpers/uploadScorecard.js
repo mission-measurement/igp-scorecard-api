@@ -6,7 +6,7 @@ const uploadScorecard = async (programreportid, filename) => {
   let data = new FormData();
   data.append('scorecard', fs.createReadStream(filename));
   let config = {
-    method: 'file',
+    method: 'scorecard',
     url: `${process.env.API_HOST}/aws/programreports/scorecard?programreportid=${programreportid}`,
     headers: {
       Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
