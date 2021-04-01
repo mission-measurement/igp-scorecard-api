@@ -63,31 +63,33 @@ const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
       });
     }
   } else {
-    try {
-      browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox'],
-      });
-      const page = await browser.newPage();
-      await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
-      await page.waitFor(800);
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox'],
+    });
+  }
 
-      await page.emulateMedia('screen');
-      await page.pdf({
-        path: path.join(__dirname + '../../../public/tmp/' + filename + '.pdf'),
-        printBackground: true,
-        preferCSSPageSize: false,
-      });
-      await page.close();
+  try {
+    const page = await browser.newPage();
+    await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
+    await page.waitFor(800);
 
-      if (!usesingleton) {
-        await browser.close();
-      }
+    await page.emulateMedia('screen');
+    await page.pdf({
+      path: path.join(__dirname + '../../../public/tmp/' + filename + '.pdf'),
+      printBackground: true,
+      preferCSSPageSize: false,
+    });
+    await page.close();
 
-      return filename;
-    } catch (error) {
+    if (!usesingleton) {
       await browser.close();
     }
+
+    return filename;
+  } catch (error) {
+    console.log(error);
+    await browser.close();
   }
 };
 

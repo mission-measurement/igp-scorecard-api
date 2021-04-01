@@ -29,6 +29,7 @@ const calculateScore = async (typeofdata, outcomefit, validity) => {
 const programreport = async (programreportuuid) => {
   const q0 = SQL`SELECT
   programreportid,
+  reportigpuid,
   programid,
   startdate,
   enddate,
