@@ -107,7 +107,7 @@ const sendHTML = async (req, res) => {
 
 const generateScorecard = async (programreportuuid) => {
   const filename = await scorecardService.getPDF(programreportuuid, true);
-  return path.join(__dirname + '../../public/tmp/' + filename + '.pdf');
+  return path.join(__dirname + '../../../public/tmp/' + filename + '.pdf');
 };
 
 const reuploadScorecard = async (req, res) => {
