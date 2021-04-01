@@ -25,8 +25,7 @@ const main = async () => {
         filename
       );
       fs.unlinkSync(filename);
-      console.log('Added scorecard for:');
-      console.log(uuid);
+      console.log('Added scorecard for:' + uuid);
     } catch (error) {
       console.log(error);
     }

@@ -9,7 +9,7 @@ const child_process = require('child_process');
 const scorecardService = require('./scorecardService');
 
 const generateBatchScorecards = async () => {
-  const q0 = SQL`SELECT * FROM portfolio WHERE scorecardcreation IS NULL AND portfolioid = 182`;
+  const q0 = SQL`SELECT * FROM portfolio WHERE scorecardcreation IS NULL`;
   const r = await db.query(q0);
 
   for (let i = 0; i < r.length; i++) {
