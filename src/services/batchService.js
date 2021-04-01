@@ -58,6 +58,8 @@ const generateBatchScorecards = async () => {
           ...data.getHeaders(),
         },
         data: data,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
       };
       console.log(config.url);
       let r = await axios(config);
