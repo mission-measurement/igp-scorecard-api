@@ -77,6 +77,7 @@ const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
 
     if (!usesingleton) {
       await browser.close();
+      browser = undefined;
     }
 
     return filename;
