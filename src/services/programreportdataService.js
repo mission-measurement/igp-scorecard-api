@@ -6,7 +6,7 @@ const programreportdata = async (
   programreportdataversionid
 ) => {
   const q0 = SQL`SELECT usestechnology, dosagelabel, frequencylabel, durationlabel, totalhours, intensitycomments, beneficiarydescription, 
-  eligibilitycriteria, distancefromlocation, describeoutcomecalculation, pc.name AS programclassification, programreportdata.programname AS programname, programreportdata.programdescription AS description
+  eligibilitycriteria, distancefromlocation, describeoutcomecalculation, pc.name AS programclassification, programreportdata.programname AS programname, programreportdata.programdescription AS description,
   CASE WHEN typeofdatacollectedid = 43 THEN 1 WHEN typeofdatacollectedid = 44 THEN 2 WHEN typeofdatacollectedid = 45 THEN 3 WHEN typeofdatacollectedid = 46 THEN 4 WHEN typeofdatacollectedid = 47 THEN 5 ELSE 0 END AS typeofdatacollectedvalue, 
   typeofdatacollectedlabel, totalbudget, budgetcurrencytype, mminsight, inkinddonationsreceived, inkinddonationscurrencytype, inkinddonationsdescription, volunteersused, volunteerhours, volunteerpercentage, additionalcomments,
   address AS addressoutcome, model AS evaluationmodel, location AS evidencecollectedlocation, _evidenceimprovement.improvement AS evidenceimprovement, _evidenceimprovement.weight AS evidenceimprovementweight,
