@@ -1,5 +1,5 @@
-const db = require('../database/databases');
-const SQL = require('sql-template-strings');
+const db = require("../database/databases");
+const SQL = require("sql-template-strings");
 
 const outcomecriterias = async (outcomeid) => {
   const q0 = SQL`SELECT * FROM taxonomy_db.outcomecriteria WHERE outcomeid = ${outcomeid}`;
@@ -71,6 +71,7 @@ const programreportoutcomes = async (
   return {
     outcomes: outcomes,
     primaryoutcome: primaryoutcome,
+    beneficiaryname: primaryoutcome.beneficiary,
   };
 };
 
