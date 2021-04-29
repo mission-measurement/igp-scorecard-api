@@ -1,5 +1,5 @@
-const db = require('../database/databases');
-const SQL = require('sql-template-strings');
+const db = require("../database/databases");
+const SQL = require("sql-template-strings");
 
 const getLocation = async (
   programid,
@@ -30,25 +30,38 @@ const getLocation = async (
           if (country.regions.length <= 5) {
             return (
               country.code +
-              ' (' +
-              country.regions.map((region) => region.name).join(', ') +
-              ')'
+              " (" +
+              country.regions.map((region) => region.name).join(", ") +
+              ")"
             );
           } else if (country.regions.length == 50) {
-            return country.code + ' (all of the states)';
+            return country.code + " (all of the states)";
           } else {
             return (
               country.code +
-              ' (' +
-              country.regions.map((region) => region.code).join(', ') +
-              ')'
+              " (" +
+              country.regions.map((region) => region.code).join(", ") +
+              ")"
             );
           }
         } else {
           return country.code;
         }
       })
-      .join(', ');
+      .join(", ");
+  } else if (countries.length > 10) {
+    let continents = countries.map((c) => {
+      return c.continent;
+    });
+    continents = continents.reduce((r, c) => ((r[c] = (r[c] || 0) + 1), r), {});
+    let result = [];
+    for (let [k, v] of Object.entries(continents)) {
+      if (k) {
+        result.push(`${k} (${v})`);
+      }
+    }
+    result = result.join(", ");
+    return result;
   } else {
     countries = countries
       .map((country) => {
@@ -56,25 +69,25 @@ const getLocation = async (
           if (country.regions.length <= 5) {
             return (
               country.name +
-              ' (' +
-              country.regions.map((region) => region.name).join(', ') +
-              ')'
+              " (" +
+              country.regions.map((region) => region.name).join(", ") +
+              ")"
             );
           } else if (country.regions.length == 50) {
-            return country.name + ' (all of the states)';
+            return country.name + " (all of the states)";
           } else {
             return (
               country.name +
-              ' (' +
-              country.regions.map((region) => region.code).join(', ') +
-              ')'
+              " (" +
+              country.regions.map((region) => region.code).join(", ") +
+              ")"
             );
           }
         } else {
           return country.name;
         }
       })
-      .join(', ');
+      .join(", ");
   }
   return countries;
 };
