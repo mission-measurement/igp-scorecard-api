@@ -23,7 +23,7 @@ const getLocation = async (
     countries.push(country);
   }
 
-  if (countries.length > 5) {
+  if (countries.length > 5 && countries.length < 10) {
     countries = countries
       .map((country) => {
         if (country.regions.length) {
