@@ -15,6 +15,7 @@ const getLocation = async (
     country.name = r[i].name;
     country.code = r[i].code;
     country.countryid = r[i].countryid;
+    country.continent = r[i].continent;
     country.regions = await getRegions(
       programreportid,
       programreportdataversionid,
