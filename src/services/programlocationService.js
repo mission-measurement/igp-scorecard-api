@@ -57,8 +57,8 @@ const getLocation = async (
     continents = continents.reduce((r, c) => ((r[c] = (r[c] || 0) + 1), r), {});
     let result = [];
     for (let [k, v] of Object.entries(continents)) {
-      if (k) {
-        result.push(`${k} (${v})`);
+      if (k && k != "null") {
+        result.push(`${k} (${v} ${result.length == 0 ? " countries" : ""})`);
       }
     }
     result = result.join(", ");
