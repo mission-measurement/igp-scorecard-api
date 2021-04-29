@@ -1,17 +1,17 @@
-const db = require('../database/databases');
-const SQL = require('sql-template-strings');
+const db = require("../database/databases");
+const SQL = require("sql-template-strings");
 
 const programreportbeneficiaries = async (
   programreportid,
   programreportdataversionid
 ) => {
-  const gender = 'Gender';
-  const age = 'Age';
-  const ethnicity = 'Ethnicity';
-  const add_char = 'Additional Characteristics';
+  const gender = "Gender";
+  const age = "Age";
+  const ethnicity = "Ethnicity";
+  const add_char = "Additional Characteristics";
   // probably want to add the AND clause:  AND prb.programreportdataversionid = ${programreportdataversionid}
   // back sometime later
-  const q0 = SQL`SELECT prb.inputvalue AS value, si.labeltext AS beneficiarychar, CASE WHEN si.questionid = 42 THEN ${gender} WHEN si.questionid = 43 THEN ${age} WHEN si.questionid = 44 THEN ${ethnicity} WHEN si.questionid = 45 THEN ${add_char} END AS category FROM programreportbeneficiaries AS prb INNER JOIN (SELECT * FROM survey_db.inputvalues WHERE questionid IN (42, 43, 44, 45)) AS si ON prb.inputdataid = si.inputvalueid AND prb.programreportdataversionid = ${programreportdataversionid} ORDER BY \`order\``;
+  const q0 = SQL`SELECT prb.inputvalue AS value, si.labeltext AS beneficiarychar, CASE WHEN si.questionid = 42 THEN ${gender} WHEN si.questionid = 43 THEN ${age} WHEN si.questionid = 44 THEN ${ethnicity} WHEN si.questionid = 45 THEN ${add_char} END AS category FROM programreportbeneficiaries AS prb INNER JOIN (SELECT * FROM survey_db.inputvalues WHERE questionid IN (42, 43, 44, 45)) AS si ON prb.inputdataid = si.inputvalueid AND prb.programreportdataversionid = ${programreportdataversionid} AND inputvalueid NOT IN (SELECT inputvalueid FROM igp_apps_db.disabledscorecardfields WHERE programreportid = ${programreportid} AND disabled = 1) ORDER BY \`order\``;
   const r = await db.query(q0);
   const q1 = SQL`SELECT value, category AS beneficiarychar, CASE WHEN questionname = 'agerange' THEN ${age} WHEN questionname = 'raceethnicity' THEN ${ethnicity} END AS category FROM additionalmoodysquestions WHERE questionname IN ('agerange', 'raceethnicity') AND value IS NOT NULL AND programreportdataversionid = ${programreportdataversionid} ORDER BY questionname`;
   const s = await db.query(q1);
