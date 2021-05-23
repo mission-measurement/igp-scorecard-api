@@ -1,0 +1,578 @@
+<html>
+
+<head>
+    <title>Impact Genome Scorecard&reg;</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{host}}/scorecard/public/css/v1/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body id='overrides-bootstrap'>
+    <div class="container-fluid">
+        <div class="row header d-flex">
+            <div class="col-sm-10 my-auto">
+                <h1>Impact Genome Scorecard&reg;</h1>
+                <h2 class="bold">{{organizationname}}:</h2><br />
+                <h2>{{programname}} ({{formatDate startdate "long"}} - {{formatDate enddate "long"}})</h2>
+            </div>
+            <div class="col-sm-2 my-auto">
+                <img class="img float-right" style="height:50px; margin-bottom: 5px;"
+                    src='{{host}}/scorecard/public/img/igp_logo_verified.png' />
+            </div>
+        </div>
+        <div class="row row-eq-height">
+            <div class="col-sm-4 sidebar d-flex flex-column">
+                <div class="">
+                    <div class="row">
+                        <div class="col-sm-12 header-sidebar">
+                            <h3 class="no-margin">Organization Overview</h3>
+                            <div class="border-bottom-solid"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-4 my-auto">
+                                        Name
+                                    </div>
+                                    <div class="col-sm-8 my-auto">
+                                        {{organizationname}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-4 my-auto">
+                                        Genome
+                                    </div>
+                                    <div class="col-sm-8 my-auto">
+                                        {{primaryoutcome.genome}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 header-sidebar">
+                            <h3 class="no-margin">Program Overview</h3>
+                            <div class="border-bottom-solid"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-4 my-auto">
+                                        Program Name
+                                    </div>
+                                    <div class="col-sm-8 my-auto">
+                                        {{programname}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-4 my-auto">
+                                        Program Type
+                                    </div>
+                                    <div class="col-sm-8 my-auto">
+                                        {{programclassification}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-4 my-auto">
+                                        Beneficiary Type
+                                    </div>
+                                    <div class="col-sm-8 my-auto">
+                                        {{beneficiaryname}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-4 my-auto">
+                                        Budget
+                                    </div>
+                                    <div class="col-sm-8 my-auto">
+                                        {{#if totalbudget}}${{decimal totalbudget}} {{budgetcurrencytype}}{{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 header-sidebar">
+                            <h3 class="no-margin">Description</h3>
+                            <div class="border-bottom"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            {{description}}
+                            <!--<div class="border-bottom"></div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 my-auto">
+                            <h3 class="no-margin">Program Logistics</h3>
+                            <div class="border-bottom-solid"></div>
+                        </div>
+                        <div class="col-sm-12 my-auto">
+                            <div class="row">
+                                <div class="col-sm-12 my-auto">
+                                    <div class="row">
+                                        <div class="col-sm-4 my-auto">
+                                            Location:
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <svg width="100%" height="95px" viewBox="0 0 100 85" {{#if d3ids.length}}
+                                                style="display:block" {{else}} style="display:none" {{/if}}></svg>
+                                            {{location}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="border-bottom"></div>-->
+
+                            {{#if enviornments.length}}
+                            <div class="col-sm-12 my-auto bold px-0">Enviornments</div>
+                            {{/if}}
+                            {{#each enviornments}}
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-10 my-auto pl-4">{{@key}}</div>
+                                    <div class="col-sm-2 percent px-0 my-auto">{{this}}%</div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="col-sm-12 mt-auto px-0">
+                        <div class="row">
+                            <div class="col-sm-12 my-auto">
+                                <h3 class="no-margin">Key Demographics</h3>
+                                <div class="border-bottom-solid"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 my-auto px-0">
+                        <div class="row">
+                            <div class="col-sm-4 my-auto">
+                                Core Beneficiary Group:
+                            </div>
+                            <div class="col-sm-8">
+                                {{beneficiarydescription}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 px-0">
+                        <div class="border-bottom">
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    {{#if beneficiarycharacateristics.ages}}
+                    <div class="col-sm-12 my-auto bold px-0">Age</div>
+                    {{/if}}
+                    {{#each beneficiarycharacateristics.ages}}
+                    <div class="row">
+                        <div class="col-sm-10 my-auto pl-4">{{this.beneficiarychar}}</div>
+                        <div class="col-sm-2 percent px-0 my-auto">{{this.value}}%</div>
+                    </div>
+                    {{/each}}
+                    {{#if beneficiarycharacateristics.genders}}
+                    <div class="col-sm-12 my-auto bold px-0">Sex</div>
+                    {{/if}}
+                    {{#each beneficiarycharacateristics.genders}}
+                    <div class="row">
+                        <div class="col-sm-10 my-auto pl-4">{{this.beneficiarychar}}</div>
+                        <div class="col-sm-2 percent px-0 my-auto">{{this.value}}%</div>
+                    </div>
+                    {{/each}}
+                    {{#if beneficiarycharacateristics.ethnicities}}
+                    <div class="col-sm-12 my-auto bold px-0">Race</div>
+                    {{/if}}
+                    {{#each beneficiarycharacateristics.ethnicities}}
+                    <div class="row">
+                        <div class="col-sm-10 my-auto pl-4">{{this.beneficiarychar}}</div>
+                        <div class="col-sm-2 percent px-0 my-auto">{{this.value}}%</div>
+                    </div>
+                    {{/each}}
+                    {{#if beneficiarycharacateristics.additionalcharacteristics}}
+                    <div class="col-sm-12 my-auto bold px-0">Additional Characteristics</div>
+                    {{/if}}
+                    {{#each beneficiarycharacateristics.additionalcharacteristics}}
+                    <div class="row">
+                        <div class="col-sm-10 my-auto pl-4">{{this.beneficiarychar}}</div>
+                        <div class="col-sm-2 percent px-0 my-auto">{{this.value}}%</div>
+                    </div>
+                    {{/each}}
+                </div>
+                {{#if mminsight}}
+                <div class="mt-2">
+                    <div class="row pr-5px">
+                        <div class="bg-blue">
+                            <div class="col-sm-12 d-flex flex-column">
+                                <div class="row bg-blue">
+                                    <div class="my-auto">
+                                        <div class="col-sm-12">
+                                            <h3 class="no-margin">Impact Genome Insight</h3>
+                                            <div class="border-bottom-solid"></div>
+                                            <div class="">
+                                                {{mminsight}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+            <div class="col-sm-8 content d-flex flex-column">
+                <div class="">
+                    <div class="row">
+                        <div class="col-sm-12 mt-1">
+                            <h2 class="bold">Outcomes</h2>
+                            <div class="border-bottom-solid"></div>
+                            <span class="bold">Primary Outcome:</span> <span
+                                class="blue">{{primaryoutcome.name}}</span></br>
+                            <span class="outcome-section">{{primaryoutcome.qualifier}}</span><br />
+                            {{#each primaryoutcome.criterias}}
+                            <div class="smaller-definition">
+                                <div style="margin-right: 5px;">-</div>
+                                <div>{{this}}</div>
+                            </div>
+                            {{/each}}
+                            {{#if secondaryoutcomes}}<span class="bold outcome-section">Secondary Outcome(s):</span>
+                            <span class="blue outcome-section">{{secondaryoutcomes}}</span>{{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div class="my-auto">
+                    <div class="row">
+                        <div class="col-sm-12 my-auto">
+                            <h2 class="bold">Self-Reported Data</h2>
+                            <div class="border-bottom-solid"></div>
+                            <div class="row">
+                                <div class="col-sm-3 py-auto text-center reported">
+                                    {{#if efficacy}}<div class="blue-bold">{{efficacy}}%</div>{{/if}}
+                                    <div class="bold">Efficacy Rate</div>
+                                    <div class="small" style="font-size: 70%;">% of beneficiaries achieving a positive
+                                        outcome</div>
+                                </div>
+                                <div class="col-sm-3 py-auto text-center reported">
+                                    <div class="blue-bold">{{decimal primaryoutcome.measured}}</div>
+                                    <div class="bold">Program Reach</div>
+                                    <div class="small" style="font-size: 70%;"># of beneficiaries served</div>
+                                </div>
+                                <div class="col-sm-3 py-auto text-center reported">
+                                    <div class="blue-bold">{{decimal primaryoutcome.acheived}}</div>
+                                    <div class="bold">Actual Outcomes</div>
+                                    <div class="small" style="font-size: 70%;">Total # of beneficiaries achieving a
+                                        positive outcome</div>
+                                </div>
+                                <div class="col-sm-3 py-auto text-center">
+                                    {{#if cpo}}<div class="blue-bold">${{decimal cpo}}</div>{{/if}}
+                                    <div class="bold">Cost per Outcome</div>
+                                    <div class="small" style="font-size: 70%;">Budget / Actual Outcomes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-auto">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h2 class="bold">Supporting Evidence</h2>
+                                    <div class="border-bottom-solid"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 border-right">
+                                    <!--<div class="row">
+                      <div class="col-sm-12">
+                        {{{rigor}}}
+                      </div>
+                    </div>-->
+                                    {{#if score}}
+                                    <div class="row">
+                                        <div class="col-12 small">
+                                            <span style="font-style:italic;">Impact Genome
+                                                Assessment:</span><br />
+                                        </div>
+                                        <div class="col-6 pr-0 pt-1">
+                                            <div style="padding-right: 10px">
+                                                <table style="font-size: 12px;">
+                                                    <tr {{#ifBetween 14 score 15}} style="border: 2px solid black"
+                                                         {{/ifBetween}}>
+                                                        <td style="width: 100px; font-size: 12px;">Very Extensive</td>
+                                                        <td
+                                                            style="background-color: olivedrab; width: 20px; height: 25px;">
+                                                        </td>
+                                                    </tr>
+                                                    <tr {{#ifBetween 11 score 13}} style="border: 2px solid black"
+                                                         {{/ifBetween}}>
+                                                        <td style="width: 100px; font-size: 12px;">Extensive</td>
+                                                        <td
+                                                            style="background-color: greenyellow; width: 20px; height: 25px;">
+                                                        </td>
+                                                    </tr>
+                                                    <tr {{#ifBetween 7 score 10}} style="border: 2px solid black"
+                                                         {{/ifBetween}}>
+                                                        <td style="width: 100px; font-size: 12px;">Moderate</td>
+                                                        <td style="background-color: beige; width: 20px; height: 25px;">
+                                                        </td>
+                                                    </tr>
+                                                    <tr {{#ifBetween 3 score 6}} style="border: 2px solid black"
+                                                         {{/ifBetween}}>
+                                                        <td style="width: 100px; font-size: 12px;">Limited</td>
+                                                        <td
+                                                            style="background-color: silver; width: 20px; height: 25px;">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 px-0 pt-1">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                    style="border-radius: 50%; height: 30px; width: 30px; background-color: #EEF2F9; padding-bottom: 2.5px; border: 1px solid black; align-items:center;">
+                                                    {{typeofdatacollectedvalue}}/5</div>
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                    style="background-color: #EEF2F9; height: 20px; width: 100px; margin-left: -5px;  padding-bottom: 2.5px; border: 1px solid black; z-index: -1;">
+                                                    Rigor</div>
+                                            </div>
+                                            <div
+                                                style="text-align: left; margin-top: -5px; margin-left: 31px; font-size: 50%;">
+                                                Quality of data collection
+                                                method</div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                    style="border-radius: 50%; height: 30px; width: 30px; background-color: #EEF2F9;  padding-bottom: 2.5px; border: 1px solid black; align-items:center;">
+                                                    {{outcomefitweight}}/5</div>
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                    style="background-color: #EEF2F9; height: 20px; width: 100px; margin-left: -5px; padding-bottom: 2.5px; border: 1px solid black; z-index: -1;">
+                                                    Relevance</div>
+                                            </div>
+                                            <div
+                                                style="text-align: left; margin-top: -5px; margin-left: 31px; font-size: 50%;">
+                                                Fit of measure(s) to the
+                                                outcome</div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                    style="border-radius: 50%; height: 30px; width: 30px; background-color: #EEF2F9;  padding-bottom: 2.5px; border: 1px solid black; align-items:center;">
+                                                    {{validityweight}}/5</div>
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                    style="background-color: #EEF2F9; height: 20px; width: 100px; margin-left: -5px;  padding-bottom: 2.5px; border: 1px solid black; z-index: -1;">
+                                                    Validity</div>
+                                            </div>
+                                            <div
+                                                style="text-align: left; margin-top: -5px; margin-left: 31px; font-size: 50%;">
+                                                Quality of instruments used
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pr-0 pt-1">
+                                            <span style="font-size: 50%;">Overall assessment, based on rigor,
+                                                relevance, and validity of evidence provided</span>
+                                        </div>
+                                    </div>
+                                    {{else}}
+                                    <div class="row">
+                                        <div class="col-12 small">
+                                            <span style="font-style: italic;">Impact Genome Assessment:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-12 small pr-0">
+                                            <div style="padding-right: 10px ">
+                                                Awaiting evidence assessment
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-6 small">
+                                    <span style="font-style:italic;">Nonprofit's description of their
+                                        evidence:</span><br />
+                                    {{describeoutcomecalculation}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{#if genes.length}}
+                <div class="my-auto">
+                    <h2 class="bold">Component Analysis</h2>
+                    <div class="border-bottom-solid"></div>
+                    <div class="">
+                        <h2 class="genomic">Most Emphasized Components (e.g., Activities) in this Program</h2>
+                    </div>
+                    {{#each genes}}
+                    <div class="border-bottom genes">
+                        {{addOne @index}}. {{this.name}}
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+                <div class="my-auto">
+                    <h2 class="bold">Program Intensity</h2>
+                    <div class="border-bottom-solid"></div>
+                    <div class="row">
+                        <div class="col-sm-12 my-auto">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="border-bottom no-padding text-center font-weight-bold">
+                                        Dosage
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 border-right">
+                                    <div class="border-bottom no-padding text-center font-weight-bold">
+                                        Frequency
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="border-bottom no-padding text-center font-weight-bold">
+                                        Duration
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="border-bottom no-padding text-center">
+                                        {{dosagelabel}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 border-right">
+                                    <div class="border-bottom no-padding text-center">
+                                        {{frequencylabel}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="border-bottom no-padding text-center">
+                                        {{durationlabel}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="no-padding mt-1">
+                                        {{intensitycomments}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-auto">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2 class="bold">Sector Benchmark Data</h2>
+                            <div class="border-bottom-solid"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-6 bold my-auto pr-0">
+                                        Program Name
+                                    </div>
+                                    <div class="col-sm-2 text-center bold my-auto pr-0">
+                                        Efficacy Rate
+                                    </div>
+                                    <div class="col-sm-4 text-center bold my-auto">
+                                        Cost Per Outcome
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-6 my-auto pr-0">
+                                        {{programname}}
+                                    </div>
+                                    <div class="col-sm-2 my-auto text-center pr-0">
+                                        {{#if efficacy}}{{efficacy}}%{{/if}}
+                                    </div>
+                                    <div class="col-sm-4 my-auto text-center">
+                                        {{#if cpo}}${{decimal cpo}}{{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="border-bottom">
+                                <div class="row">
+                                    <div class="col-sm-6 my-auto  pr-0 ">
+                                        Impact Genome Benchmark<sup>*</sup> for this Outcome
+                                    </div>
+                                    <div class="col-sm-2 my-auto text-center pr-0">
+                                        {{#if minER}}{{minER}}% - {{maxER}}%{{else}}N/A{{/if}}
+                                    </div>
+                                    <div class="col-sm-4 my-auto text-center">
+                                        {{#if minCPO}}${{decimal minCPO}} - ${{decimal maxCPO}}{{else}}N/A{{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-sm-12 x-small"><sup>*</sup> The average Efficacy Rate and Cost Per Outcome of
+                            all programs in the Impact Genome database that target this same outcome.</div>
+                    </div>
+                </div>
+                <div class="mt-auto">
+                    <div class="row">
+                        <div class="col-sm-12 small">
+                            The data above was reported by {{organizationname}} in {{submitteddate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<!-- Define states -->
+<script>
+    const data = [{{ d3ids }}]
+</script>
+
+<!-- Load D3 JS -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Load D3 Topo JSON JS -->
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<!-- Load local JS file -->
+
+<script src="{{host}}/scorecard/public/js/v1/script.js"></script>
+
+</html>

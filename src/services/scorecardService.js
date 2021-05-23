@@ -1,22 +1,22 @@
-const db = require('../database/databases');
-const path = require('path');
-const fs = require('fs');
-const { getAllData } = require('./programreportService');
-const puppeteer = require('puppeteer');
-const Handlebars = require('handlebars');
-const SQL = require('sql-template-strings');
-const axios = require('axios');
-const { writer } = require('repl');
-const { program } = require('./programService');
+const db = require("../database/databases");
+const path = require("path");
+const fs = require("fs");
+const { getAllData } = require("./programreportService");
+const puppeteer = require("puppeteer");
+const Handlebars = require("handlebars");
+const SQL = require("sql-template-strings");
+const axios = require("axios");
+const { writer } = require("repl");
+const { program } = require("./programService");
 
 let browser; // use a singleton instance of puppeteer
 
 // register custom helper functions to Handlebars here:
-Handlebars.registerHelper('addOne', function (value) {
+Handlebars.registerHelper("addOne", function (value) {
   return value + 1;
 });
 
-Handlebars.registerHelper('ifBetween', function (arg1, value, arg2, options) {
+Handlebars.registerHelper("ifBetween", function (arg1, value, arg2, options) {
   if (arg1 <= value && value <= arg2) {
     return options.fn(this);
   } else {
@@ -24,19 +24,43 @@ Handlebars.registerHelper('ifBetween', function (arg1, value, arg2, options) {
   }
 });
 
-Handlebars.registerHelper('decimal', function (number) {
+Handlebars.registerHelper("formatDate", function (datetime, format) {
+  if (format == "short") {
+    return datetime.toLocaleDateString();
+  } else {
+    months = [
+      "January",
+      "Feburary",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    monthIndex = datetime.getMonth();
+    year = datetime.getFullYear();
+    return months[monthIndex] + " " + year;
+  }
+});
+
+Handlebars.registerHelper("decimal", function (number) {
   if (number < 1) {
     return parseFloat(number).toFixed(2);
   } else {
-    return parseInt(number).toLocaleString('en-US');
+    return parseInt(number).toLocaleString("en-US");
   }
 });
 // ...
 
 // load the current template
 const template = fs.readFileSync(
-  path.join(__dirname, '../../public/templates/v1/template.handlebars'),
-  'utf-8'
+  path.join(__dirname, "../../public/templates/v2/template.handlebars"),
+  "utf-8"
 );
 
 /**
@@ -58,18 +82,18 @@ const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
   if (!browser) {
     browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox'],
+      args: ["--no-sandbox"],
     });
   }
 
   try {
     const page = await browser.newPage();
-    await page.setContent(parsedHTML, { waitUntil: 'networkidle2' });
+    await page.setContent(parsedHTML, { waitUntil: "networkidle2" });
     await page.waitFor(800);
 
-    await page.emulateMedia('screen');
+    await page.emulateMedia("screen");
     await page.pdf({
-      path: path.join(__dirname + '../../../public/tmp/' + filename + '.pdf'),
+      path: path.join(__dirname + "../../../public/tmp/" + filename + ".pdf"),
       printBackground: true,
       preferCSSPageSize: false,
     });
@@ -92,22 +116,22 @@ const getScorecardPDF = async (reportuuid) => {
   const r = await db.query(q);
 
   if (r.length) {
-    console.log('Fetched from S3!');
+    console.log("Fetched from S3!");
     const filename = r[0].reportigpuid;
     const location = path.join(
-      __dirname + '/../../public/tmp/' + filename + '.pdf'
+      __dirname + "/../../public/tmp/" + filename + ".pdf"
     );
     const url = r[0].url;
     const response = await axios({
-      method: 'get',
+      method: "get",
       url: url,
-      responseType: 'stream',
+      responseType: "stream",
     });
 
     let writer = fs.createWriteStream(location);
     response.data.pipe(writer);
     return new Promise((resolve, reject) => {
-      writer.on('finish', () => {
+      writer.on("finish", () => {
         resolve(filename);
       });
     });
@@ -153,7 +177,7 @@ const getPDF = async (reportuuid, usesingleton = false) => {
     const r = await getAllData(reportuuid);
     const s = parseToHTML({
       ...r,
-      host: process.env.API_HOST || 'https://api.impactgenome.com',
+      host: process.env.API_HOST || "https://api.impactgenome.com",
     });
     const t = await parseToPDF(r, s, usesingleton);
     return t;
@@ -164,7 +188,7 @@ const getNewPDF = async (reportuuid, usesingleton = false) => {
   const r = await getAllData(reportuuid);
   const s = parseToHTML({
     ...r,
-    host: process.env.API_HOST || 'https://api.impactgenome.com',
+    host: process.env.API_HOST || "https://api.impactgenome.com",
   });
   const t = await parseToPDF(r, s, usesingleton);
   return t;
