@@ -25,6 +25,7 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "puppeteer": "^3.3.0",
+    "sanitize-filename": "^1.6.3",
     "sql-template-strings": "^2.2.2",
     "util": "^0.12.3"
   }
