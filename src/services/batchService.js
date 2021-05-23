@@ -14,14 +14,13 @@ const generateBatchScorecards = async () => {
 
   for (let i = 0; i < r.length; i++) {
     let portfolioid = r[i].portfolioid;
+    let raw_foldername = r[i].name + " (" + r[i].year + ")";
     let filenames = await scorecardService.getPortfolioScorecards(portfolioid);
     filenames = [...new Set(filenames)]; // make unique
 
     if (filenames.length) {
       // create temporary folder
-      const foldername = sanitize(
-        r[i].name + " (" + r[i].year + r[i].month + ")"
-      );
+      const foldername = sanitize(raw_foldername);
       fs.mkdirSync(path.join(__dirname + "../../../public/tmp/" + foldername));
       // iterate through the files and put them into a folder
       for (let j = 0; j < filenames.length; j++) {
@@ -40,10 +39,8 @@ const generateBatchScorecards = async () => {
       }
 
       // zip up the folder
-      exec_path = path
-        .join(__dirname + "../../../public/tmp/" + foldername)
-        .replace(/ /g, "\\ ");
-      child_process.execSync(`zip -j ${exec_path} ${exec_path}/*`);
+      exec_path = path.join(__dirname + "../../../public/tmp/" + foldername);
+      child_process.execSync(`zip -j "${exec_path}" "${exec_path}/*"`);
 
       let data = new FormData();
       data.append(

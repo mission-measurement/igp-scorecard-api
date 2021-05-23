@@ -88,7 +88,7 @@ const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
 };
 
 const getScorecardPDF = async (reportuuid) => {
-  const q = SQL`SELECT s.*, p.*, o.name AS organizationname FROM scorecards s INNER JOIN programreports p USING(programreportid) INNER JOIN programs USING(programid) INNER JOIN organizations USING(organizationid) WHERE programreportuuid = ${reportuuid} ORDER BY scorecardid DESC LIMIT 1`;
+  const q = SQL`SELECT s.*, p.*, o.name AS organizationname FROM scorecards s INNER JOIN programreports p USING(programreportid) INNER JOIN programs ON p.programid = programs.programid INNER JOIN organizations o USING(organizationid) WHERE programreportuuid = ${reportuuid} ORDER BY scorecardid DESC LIMIT 1`;
   const r = await db.query(q);
 
   if (r.length) {
