@@ -20,7 +20,8 @@ const generateBatchScorecards = async () => {
 
     if (filenames.length) {
       // create temporary folder
-      const foldername = sanitize(raw_foldername);
+      let foldername = sanitize(raw_foldername);
+      foldername = foldername.replace(/\./g, "");
       fs.mkdirSync(path.join(__dirname + "../../../public/tmp/" + foldername));
       // iterate through the files and put them into a folder
       for (let j = 0; j < filenames.length; j++) {
