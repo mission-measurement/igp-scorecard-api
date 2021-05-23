@@ -1,11 +1,11 @@
-const db = require('../database/databases');
-const SQL = require('sql-template-strings');
+const db = require("../database/databases");
+const SQL = require("sql-template-strings");
 
 const programreportactivties = async (
   programreportid,
   programreportdataversionid
 ) => {
-  const q0 = SQL`SELECT * FROM programreportactivties AS pra LEFT JOIN taxonomy_db.genes AS g USING (geneid) WHERE programreportid = ${programreportid} AND istop = 1 AND programreportdataversionid = ${programreportdataversionid} ORDER BY ranknum DESC LIMIT 5`;
+  const q0 = SQL`SELECT pra.*, g.*, genomes.code AS genomeid, impactareas.code AS impactareaid FROM programreportactivties AS pra LEFT JOIN taxonomy_db.genes AS g USING (geneid) LEFT JOIN taxonomy_db.genomes USING(genomeid) LEFT JOIN taxonomy_db.impactareas USING(impactareaid) WHERE programreportid = ${programreportid} AND istop = 1 AND programreportdataversionid = ${programreportdataversionid} ORDER BY ranknum DESC LIMIT 5`;
   const r = await db.query(q0);
 
   let genes = [];
@@ -17,7 +17,7 @@ const programreportactivties = async (
     gene.chromosomeid = r[i].chromosomeid;
     gene.description = r[i].description;
     gene.genomeid = r[i].genomeid;
-    gene.code = r[i].code;
+    gene.code = "Z" + r[i].impactareaid + "." + r[i].genomeid + "." + r[i].code;
     genes.push(gene);
   }
 

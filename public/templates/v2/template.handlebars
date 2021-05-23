@@ -238,7 +238,7 @@
                                 <div class="row bg-blue">
                                     <div class="my-auto">
                                         <div class="col-sm-12">
-                                            <h3 class="no-margin">Impact Genome Insight</h3>
+                                            <h3 class="no-margin">Impact Genome Insight <small>({{insightdate}})</small></h3>
                                             <div class="border-bottom-solid"></div>
                                             <div class="">
                                                 {{mminsight}}
@@ -434,7 +434,7 @@
                     </div>
                     {{#each genes}}
                     <div class="border-bottom genes">
-                        {{addOne @index}}. {{this.name}}
+                        {{this.code}} {{this.name}}
                     </div>
                     {{/each}}
                 </div>
@@ -548,7 +548,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-sm-12 x-small"><sup>*</sup> The average Efficacy Rate and Cost Per Outcome of
-                            all programs in the Impact Genome database that target this same outcome.</div>
+                            all programs in the Impact Genome database that target this same outcome as of {{formatDate benchmarkdate "long"}}.</div>
                     </div>
                 </div>
                 <div class="mt-auto">

@@ -8,8 +8,8 @@ const programreportdata = async (
   const q0 = SQL`SELECT usestechnology, new_dosagelabel.scorecard_labeltext AS dosagelabel, new_frequencylabel.scorecard_labeltext AS frequencylabel, new_durationlabel.scorecard_labeltext AS durationlabel, totalhours, intensitycomments, beneficiarydescription, 
   eligibilitycriteria, distancefromlocation, describeoutcomecalculation, pc.name AS programclassification, programreportdata.programname AS programname, programreportdata.programdescription AS description,
   CASE WHEN typeofdatacollectedid = 43 THEN 1 WHEN typeofdatacollectedid = 44 THEN 2 WHEN typeofdatacollectedid = 45 THEN 3 WHEN typeofdatacollectedid = 46 THEN 4 WHEN typeofdatacollectedid = 47 THEN 5 ELSE 0 END AS typeofdatacollectedvalue, 
-  typeofdatacollectedlabel, totalbudget, budgetcurrencytype, mminsight, inkinddonationsreceived, inkinddonationscurrencytype, inkinddonationsdescription, volunteersused, volunteerhours, volunteerpercentage, additionalcomments,
-  address AS addressoutcome, model AS evaluationmodel, location AS evidencecollectedlocation, _evidenceimprovement.improvement AS evidenceimprovement, _evidenceimprovement.weight AS evidenceimprovementweight,
+  typeofdatacollectedlabel, totalbudget, budgetcurrencytype, mminsight, CONCAT(MONTH(created) ,"/", YEAR(created)) AS insightdate, inkinddonationsreceived, inkinddonationscurrencytype, inkinddonationsdescription, volunteersused, volunteerhours, volunteerpercentage, 
+  additionalcomments, address AS addressoutcome, model AS evaluationmodel, location AS evidencecollectedlocation, _evidenceimprovement.improvement AS evidenceimprovement, _evidenceimprovement.weight AS evidenceimprovementweight,
   expertevidence, instrumenttype, _measurementtype.measure AS measurementtype, fit AS outcomefit, ofit.weight AS outcomefitweight, val.weight AS validityweight, collector AS programcollector, _proximityofmeasure.measure AS proximityofmeasure,
   source, _subjectofmeasure.measure AS subjectofmeasure, validity AS validity FROM programreportdata 
       LEFT JOIN taxonomy_db.programclassifications pc ON primaryoutcomeclassificationid = programclassificationid

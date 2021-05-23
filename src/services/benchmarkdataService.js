@@ -22,6 +22,7 @@ const getBenchmarkData = async (outcomeid) => {
       minER: parseInt(r[0].minER),
       maxER: parseInt(r[0].maxER),
       avgER: r[0].avgER,
+      benchmarkdate: new Date(),
     };
   }
 };
