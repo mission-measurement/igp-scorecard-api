@@ -40,7 +40,7 @@ const generateBatchScorecards = async () => {
 
       // zip up the folder
       exec_path = path.join(__dirname + "../../../public/tmp/" + foldername);
-      child_process.execSync(`zip -j "${exec_path}" "${exec_path}/*"`);
+      child_process.execSync(`zip -j "${exec_path}" "${exec_path}/"*`);
 
       let data = new FormData();
       data.append(
