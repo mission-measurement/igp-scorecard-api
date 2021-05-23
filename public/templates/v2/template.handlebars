@@ -259,7 +259,7 @@
                             <h2 class="bold">Outcomes</h2>
                             <div class="border-bottom-solid"></div>
                             <span class="bold">Primary Outcome:</span> <span
-                                class="blue">{{primaryoutcome.name}}</span></br>
+                                class="blue">{{primaryoutcome.name}} ({{primaryoutcome.code}})</span></br>
                             <span class="outcome-section">{{primaryoutcome.qualifier}}</span><br />
                             {{#each primaryoutcome.criterias}}
                             <div class="smaller-definition">
@@ -445,36 +445,46 @@
                     <div class="row">
                         <div class="col-sm-12 my-auto">
                             <div class="row">
-                                <div class="col-sm-4 border-right">
+                                <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center font-weight-bold">
                                         Dosage
                                     </div>
                                 </div>
-                                <div class="col-sm-4 border-right">
+                                <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center font-weight-bold">
                                         Frequency
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center font-weight-bold">
                                         Duration
                                     </div>
                                 </div>
+                                <div class="col-sm-3">
+                                    <div class="border-bottom no-padding text-center font-weight-bold">
+                                        Contact Hours
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 border-right">
+                                <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center">
                                         {{dosagelabel}}
                                     </div>
                                 </div>
-                                <div class="col-sm-4 border-right">
+                                <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center">
                                         {{frequencylabel}}
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center">
                                         {{durationlabel}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="border-bottom no-padding text-center">
+                                        {{totalhours}} hrs
                                     </div>
                                 </div>
                             </div>

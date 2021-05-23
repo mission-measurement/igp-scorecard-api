@@ -16,7 +16,7 @@ const programreportoutcomes = async (
   programreportdataversionid
 ) => {
   const q0 = SQL`SELECT programreportdataversionid, programreportid, pro.outcomeid AS outcomeid, outcomerank, MAX(isprimary) AS isprimary, measured, acheived, pro.beneficiarytypeid, oq.*, o.*, g.*, i.*, b.* FROM programreportoutcomes AS pro 
-  LEFT JOIN (SELECT name AS outcomename, outcomeid, genomeid, impactareaid, description, definition FROM taxonomy_db.outcomes) AS o ON pro.outcomeid = o.outcomeid
+  LEFT JOIN (SELECT name AS outcomename, outcomeid, genomeid, impactareaid, description, definition, universaloutcomeid FROM taxonomy_db.outcomes) AS o ON pro.outcomeid = o.outcomeid
   LEFT JOIN taxonomy_db.outcomequalifier AS oq ON (pro.outcomeid = oq.outcomeid) 
   LEFT JOIN (SELECT name AS genomename, genomeid FROM taxonomy_db.genomes) AS g ON g.genomeid = o.genomeid
   LEFT JOIN  (SELECT name AS impactareaname, impactareaid FROM taxonomy_db.impactareas) AS i ON i.impactareaid = o.impactareaid
@@ -32,6 +32,7 @@ const programreportoutcomes = async (
     if (result[i].isprimary) {
       let outcome = {};
       outcome.id = result[i].outcomeid;
+      outcome.code = result[i].universaloutcomeid;
       outcome.name = result[i].outcomename;
       outcome.genome = result[i].genomename;
       outcome.impactarea = result[i].impactareaname;

@@ -17,7 +17,7 @@ const programreportactivties = async (
     gene.chromosomeid = r[i].chromosomeid;
     gene.description = r[i].description;
     gene.genomeid = r[i].genomeid;
-    gene.code = "Z" + r[i].impactareaid + "." + r[i].genomeid + "." + r[i].code;
+    gene.code = "A" + r[i].impactareaid + "." + r[i].genomeid + "." + r[i].code;
     genes.push(gene);
   }
 
