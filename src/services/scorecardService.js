@@ -6,6 +6,7 @@ const puppeteer = require("puppeteer");
 const Handlebars = require("handlebars");
 const SQL = require("sql-template-strings");
 const axios = require("axios");
+const sanitize = require("sanitize-filename");
 const { writer } = require("repl");
 const { program } = require("./programService");
 
@@ -93,7 +94,8 @@ const getScorecardPDF = async (reportuuid) => {
 
   if (r.length) {
     console.log("Fetched from S3!");
-    const filename = r[0].organizationname + "-" + r[0].reportigpuid;
+    let filename = r[0].organizationname + "-" + r[0].reportigpuid;
+    filename = sanitize(filename);
     const location = path.join(
       __dirname + "/../../public/tmp/" + filename + ".pdf"
     );
