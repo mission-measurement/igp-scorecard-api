@@ -55,7 +55,8 @@ const parseToHTML = (data) => {
  * @param {*} parsedHTML
  */
 const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
-  const filename = r.reportigpuid;
+  let filename = r.organizationname + " - " + r.reportigpuid;
+  filename = sanitize(filename);
   if (!browser) {
     browser = await puppeteer.launch({
       headless: true,
