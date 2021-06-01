@@ -259,7 +259,7 @@
                             <h2 class="bold">Outcomes</h2>
                             <div class="border-bottom-solid"></div>
                             <span class="bold">Primary Outcome:</span> <span
-                                class="blue">{{primaryoutcome.name}} ({{primaryoutcome.code}})</span></br>
+                                class="blue">{{primaryoutcome.code}}: {{primaryoutcome.name}}</span></br>
                             <span class="outcome-section">{{primaryoutcome.qualifier}}</span><br />
                             {{#each primaryoutcome.criterias}}
                             <div class="smaller-definition">
@@ -447,12 +447,7 @@
                             <div class="row">
                                 <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center font-weight-bold">
-                                        Dosage
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 border-right">
-                                    <div class="border-bottom no-padding text-center font-weight-bold">
-                                        Frequency
+                                        Contact Hours
                                     </div>
                                 </div>
                                 <div class="col-sm-3 border-right">
@@ -460,21 +455,21 @@
                                         Duration
                                     </div>
                                 </div>
+                                <div class="col-sm-3 border-right">
+                                    <div class="border-bottom no-padding text-center font-weight-bold">
+                                        Frequency
+                                    </div>
+                                </div>
                                 <div class="col-sm-3">
                                     <div class="border-bottom no-padding text-center font-weight-bold">
-                                        Contact Hours
+                                        Dosage
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 border-right">
                                     <div class="border-bottom no-padding text-center">
-                                        {{dosagelabel}}
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 border-right">
-                                    <div class="border-bottom no-padding text-center">
-                                        {{frequencylabel}}
+                                        {{totalhours}} hrs
                                     </div>
                                 </div>
                                 <div class="col-sm-3 border-right">
@@ -482,9 +477,14 @@
                                         {{durationlabel}}
                                     </div>
                                 </div>
+                                <div class="col-sm-3 border-right">
+                                    <div class="border-bottom no-padding text-center">
+                                        {{frequencylabel}}
+                                    </div>
+                                </div>
                                 <div class="col-sm-3">
                                     <div class="border-bottom no-padding text-center">
-                                        {{totalhours}} hrs
+                                        {{dosagelabel}}
                                     </div>
                                 </div>
                             </div>
@@ -559,13 +559,6 @@
                     <div class="row mt-1">
                         <div class="col-sm-12 x-small"><sup>*</sup> The average Efficacy Rate and Cost Per Outcome of
                             all programs in the Impact Genome database that target this same outcome as of {{formatDate benchmarkdate "long"}}.</div>
-                    </div>
-                </div>
-                <div class="mt-auto">
-                    <div class="row">
-                        <div class="col-sm-12 small">
-                            The data above was reported by {{organizationname}} in {{submitteddate}}
-                        </div>
                     </div>
                 </div>
             </div>
