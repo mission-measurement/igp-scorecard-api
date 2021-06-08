@@ -6,10 +6,6 @@ const puppeteer = require("puppeteer");
 const Handlebars = require("handlebars");
 const SQL = require("sql-template-strings");
 const axios = require("axios");
-<<<<<<< HEAD
-const sanitize = require("sanitize-filename");
-=======
->>>>>>> new_scorecard
 const { writer } = require("repl");
 const { program } = require("./programService");
 
