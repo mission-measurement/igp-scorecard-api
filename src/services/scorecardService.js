@@ -6,6 +6,7 @@ const puppeteer = require("puppeteer");
 const Handlebars = require("handlebars");
 const SQL = require("sql-template-strings");
 const axios = require("axios");
+const sanitize = require("sanitize-filename");
 const { writer } = require("repl");
 const { program } = require("./programService");
 
@@ -113,32 +114,36 @@ const parseToPDF = async (r, parsedHTML, usesingleton = false) => {
 };
 
 const getScorecardPDF = async (reportuuid) => {
-  const q = SQL`SELECT s.*, p.*, o.name AS organizationname FROM scorecards s INNER JOIN programreports p USING(programreportid) INNER JOIN programs ON p.programid = programs.programid INNER JOIN organizations o USING(organizationid) WHERE programreportuuid = ${reportuuid} ORDER BY scorecardid DESC LIMIT 1`;
-  const r = await db.query(q);
+  try {
+    const q = SQL`SELECT s.*, p.*, o.name AS organizationname FROM scorecards s INNER JOIN programreports p USING(programreportid) INNER JOIN programs ON p.programid = programs.programid INNER JOIN organizations o USING(organizationid) WHERE programreportuuid = ${reportuuid} ORDER BY scorecardid DESC LIMIT 1`;
+    const r = await db.query(q);
 
-  if (r.length) {
-    console.log("Fetched from S3!");
-    let filename = r[0].organizationname + "-" + r[0].reportigpuid;
-    filename = sanitize(filename);
-    const location = path.join(
-      __dirname + "/../../public/tmp/" + filename + ".pdf"
-    );
-    const url = r[0].url;
-    const response = await axios({
-      method: "get",
-      url: url,
-      responseType: "stream",
-    });
-
-    let writer = fs.createWriteStream(location);
-    response.data.pipe(writer);
-    return new Promise((resolve, reject) => {
-      writer.on("finish", () => {
-        resolve(filename);
+    if (r.length) {
+      console.log("Fetched from S3!");
+      let filename = r[0].organizationname + "-" + r[0].reportigpuid;
+      filename = sanitize(filename);
+      const location = path.join(
+        __dirname + "/../../public/tmp/" + filename + ".pdf"
+      );
+      const url = r[0].url;
+      const response = await axios({
+        method: "get",
+        url: url,
+        responseType: "stream",
       });
-    });
-  } else {
-    return undefined;
+
+      let writer = fs.createWriteStream(location);
+      response.data.pipe(writer);
+      return new Promise((resolve, reject) => {
+        writer.on("finish", () => {
+          resolve(filename);
+        });
+      });
+    } else {
+      return undefined;
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
