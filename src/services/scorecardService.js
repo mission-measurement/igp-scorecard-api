@@ -6,7 +6,10 @@ const puppeteer = require("puppeteer");
 const Handlebars = require("handlebars");
 const SQL = require("sql-template-strings");
 const axios = require("axios");
+<<<<<<< HEAD
 const sanitize = require("sanitize-filename");
+=======
+>>>>>>> new_scorecard
 const { writer } = require("repl");
 const { program } = require("./programService");
 
@@ -25,6 +28,30 @@ Handlebars.registerHelper("ifBetween", function (arg1, value, arg2, options) {
   }
 });
 
+Handlebars.registerHelper("formatDate", function (datetime, format) {
+  if (format == "short") {
+    return datetime.toLocaleDateString();
+  } else {
+    months = [
+      "January",
+      "Feburary",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    monthIndex = datetime.getMonth();
+    year = datetime.getFullYear();
+    return months[monthIndex] + " " + year;
+  }
+});
+
 Handlebars.registerHelper("decimal", function (number) {
   if (number < 1) {
     return parseFloat(number).toFixed(2);
@@ -36,7 +63,7 @@ Handlebars.registerHelper("decimal", function (number) {
 
 // load the current template
 const template = fs.readFileSync(
-  path.join(__dirname, "../../public/templates/v1/template.handlebars"),
+  path.join(__dirname, "../../public/templates/v2/template.handlebars"),
   "utf-8"
 );
 

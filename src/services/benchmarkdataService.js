@@ -1,9 +1,9 @@
-const api = require('../helpers/apiHelpers');
+const api = require("../helpers/apiHelpers");
 
 const getBenchmarkData = async (outcomeid) => {
-  const r = await api.get('taxonomy', 'benchmarkdata', {
+  const r = await api.get("taxonomy", "benchmarkdata", {
     outcomeid: outcomeid,
-    public: 1
+    public: 1,
   });
   if (r.messge) {
     return {
@@ -22,6 +22,7 @@ const getBenchmarkData = async (outcomeid) => {
       minER: parseInt(r[0].minER),
       maxER: parseInt(r[0].maxER),
       avgER: r[0].avgER,
+      benchmarkdate: new Date(),
     };
   }
 };
