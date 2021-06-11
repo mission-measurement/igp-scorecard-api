@@ -7,8 +7,6 @@ const Handlebars = require("handlebars");
 const SQL = require("sql-template-strings");
 const axios = require("axios");
 const sanitize = require("sanitize-filename");
-const { writer } = require("repl");
-const { program } = require("./programService");
 
 let browser; // use a singleton instance of puppeteer
 
@@ -43,9 +41,13 @@ Handlebars.registerHelper("formatDate", function (datetime, format) {
       "November",
       "December",
     ];
-    monthIndex = datetime.getMonth();
-    year = datetime.getFullYear();
-    return months[monthIndex] + " " + year;
+    try {
+      monthIndex = datetime.getMonth();
+      year = datetime.getFullYear();
+      return months[monthIndex] + " " + year;
+    } catch (error) {
+      return "unknown";
+    }
   }
 });
 
